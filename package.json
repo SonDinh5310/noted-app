@@ -10,21 +10,25 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.2.0",
+    "@react-navigation/drawer": "^6.3.3",
+    "@react-navigation/native": "^6.0.8",
+    "@react-navigation/native-stack": "^6.5.2",
+    "@types/react": "^17.0.43",
+    "@types/react-native": "^0.67.3",
     "expo": "~44.0.0",
     "expo-status-bar": "~1.2.0",
     "punycode": "^2.1.1",
-    "react": "17.0.1",
+    "react": "^17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
-    "react-native-ete-rich-editor": "^1.0.8",
+    "react-native-gesture-handler": "~2.1.0",
     "react-native-markdown-display": "^7.0.0-alpha.2",
+    "react-native-reanimated": "~2.3.1",
     "react-native-render-html": "^6.3.4",
-    "react-native-web": "0.17.1",
-    "remark-gfm": "^3.0.1",
-    "remark-html": "^15.0.1",
-    "remark-parse": "^10.0.1",
-    "remark-toc": "^8.0.1",
-    "unified": "^10.1.2"
+    "react-native-safe-area-context": "3.3.2",
+    "react-native-screens": "~3.10.1",
+    "react-native-web": "0.17.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
