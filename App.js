@@ -1,20 +1,18 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import NotedApp from "./NotedApp";
-
-const Stack = createNativeStackNavigator();
+import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import SideMenu from './components/sideMenu';
+import { AppContext } from './utils/context';
 
 export default function App() {
+    const [togglePreview, setTogglePreview] = useState(false);
+    const handleTogglePreview = () => {
+        setTogglePreview(!togglePreview);
+    };
     return (
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen
-                    name="Home"
-                    component={NotedApp}
-                    // options={{ headerShown: false }}
-                ></Stack.Screen>
-            </Stack.Navigator>
-        </NavigationContainer>
+        <AppContext.Provider value={{ togglePreview, handleTogglePreview }}>
+            <NavigationContainer>
+                <SideMenu></SideMenu>
+            </NavigationContainer>
+        </AppContext.Provider>
     );
 }
