@@ -1,11 +1,51 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
+import { ScrollView, View, TextInput, Button, Text } from 'react-native';
+import CustomTextInput from '../CustomTextInput';
 
 const SignIn = () => {
+    const {
+        control,
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            email: '',
+            password: '',
+        },
+    });
+    const onSubmit = (data) => {
+        console.log(data);
+        reset(data);
+    };
+    // const onChange = (e) => {
+    //     return {
+    //         value: e.nativeEvent.text,
+    //     };
+    // };
     return (
-        <View>
-            <Text>This is sign in screen</Text>
-        </View>
+        <ScrollView>
+            <CustomTextInput
+                name="email"
+                fieldName="Email"
+                control={control}
+                rules={{ required: '*Email is required!' }}
+            />
+
+            <CustomTextInput
+                name="password"
+                fieldName="Password"
+                control={control}
+                rules={{ required: '*Password is required!' }}
+                secureTextEntry={true}
+            />
+
+            <View>
+                <Button title="Sign in" onPress={handleSubmit(onSubmit)} />
+            </View>
+        </ScrollView>
     );
 };
 
