@@ -1,14 +1,14 @@
-import React, { useContext, useEffect } from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import SignIn from './signIn/signIn';
-import SignUp from './signUp/signUp';
-import NotedApp from '../NotedApp';
-import UserProfile from './userProfile';
-import Settings from './settings';
-import CustomDrawer from './customDrawer';
-import { AppContext } from '../utils/context';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import React, { useContext, useEffect } from "react";
+import { TouchableOpacity, View } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import SignIn from "./signIn/signIn";
+import SignUp from "./signUp/signUp";
+import NotedApp from "../NotedApp";
+import UserProfile from "./userProfile";
+import Settings from "./settings";
+import CustomDrawer from "./customDrawer";
+import { AppContext } from "../utils/context";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const Drawer = createDrawerNavigator();
 
@@ -85,41 +85,41 @@ const SideMenu = () => {
                             color={color}
                         ></MaterialIcons>
                     ),
-                    // headerRight: ({ color }) => (
-                    //     <View
-                    //         style={{
-                    //             flex: 1,
-                    //             flexDirection: 'row',
-                    //             alignItems: 'center',
-                    //             marginRight: 10,
-                    //         }}
-                    //     >
-                    //         <TouchableOpacity
-                    //             onPress={() => handleTogglePreview()}
-                    //         >
-                    //             {togglePreview ? (
-                    //                 <MaterialIcons
-                    //                     name="edit"
-                    //                     size={22}
-                    //                     color={color}
-                    //                 ></MaterialIcons>
-                    //             ) : (
-                    //                 <MaterialIcons
-                    //                     name="play-arrow"
-                    //                     size={28}
-                    //                     color={color}
-                    //                 ></MaterialIcons>
-                    //             )}
-                    //         </TouchableOpacity>
-                    //         <TouchableOpacity style={{ marginLeft: 10 }}>
-                    //             <MaterialIcons
-                    //                 name="more-vert"
-                    //                 size={25}
-                    //                 color={color}
-                    //             ></MaterialIcons>
-                    //         </TouchableOpacity>
-                    //     </View>
-                    // ),
+                    headerRight: ({ color }) => (
+                        <View
+                            style={{
+                                flex: 1,
+                                flexDirection: "row",
+                                alignItems: "center",
+                                marginRight: 10,
+                            }}
+                        >
+                            <TouchableOpacity
+                                onPress={() => handleTogglePreview()}
+                            >
+                                {togglePreview ? (
+                                    <MaterialIcons
+                                        name="edit"
+                                        size={22}
+                                        color={color}
+                                    ></MaterialIcons>
+                                ) : (
+                                    <MaterialIcons
+                                        name="play-arrow"
+                                        size={28}
+                                        color={color}
+                                    ></MaterialIcons>
+                                )}
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{ marginLeft: 10 }}>
+                                <MaterialIcons
+                                    name="more-vert"
+                                    size={25}
+                                    color={color}
+                                ></MaterialIcons>
+                            </TouchableOpacity>
+                        </View>
+                    ),
                 }}
             />
         </Drawer.Navigator>
