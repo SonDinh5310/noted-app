@@ -8,12 +8,20 @@ import UserProfile from "./userProfile";
 import Settings from "./settings";
 import CustomDrawer from "./customDrawer";
 import { AppContext } from "../utils/context";
+import { AppStore } from "../utils/zustand";
+import shallow from "zustand/shallow";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const Drawer = createDrawerNavigator();
 
 const SideMenu = () => {
-    const { togglePreview, handleTogglePreview } = useContext(AppContext);
+    const { toggleEdit, setToggleEdit } = AppStore(
+        (state) => ({
+            toggleEdit: state.toggleEdit,
+            setToggleEdit: state.setToggleEdit,
+        }),
+        shallow
+    );
     return (
         <Drawer.Navigator
             drawerContent={(props) => <CustomDrawer {...props} />}
@@ -94,10 +102,8 @@ const SideMenu = () => {
                                 marginRight: 10,
                             }}
                         >
-                            <TouchableOpacity
-                                onPress={() => handleTogglePreview()}
-                            >
-                                {togglePreview ? (
+                            <TouchableOpacity onPress={() => setToggleEdit()}>
+                                {toggleEdit ? (
                                     <MaterialIcons
                                         name="edit"
                                         size={22}
