@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
+import React, { useContext, useState } from "react";
+import { StatusBar } from "expo-status-bar";
 import {
     StyleSheet,
     Text,
@@ -7,14 +7,15 @@ import {
     useWindowDimensions,
     ScrollView,
     TouchableOpacity,
-} from 'react-native';
-import Editor from './components/editor';
-import Preview from './components/preview';
-import { AppContext } from './utils/context';
+} from "react-native";
+import Editor from "./components/editor";
+import Preview from "./components/preview";
+import { AppContext } from "./utils/context";
+import { AppStore } from "./utils/zustand";
 
 const NotedApp = () => {
-    const [note, setNote] = useState('');
-    const { togglePreview } = useContext(AppContext);
+    const [note, setNote] = useState("");
+    const toggleEdit = AppStore((state) => state.toggleEdit);
 
     const handleChange = (value) => {
         setNote(value);
@@ -27,9 +28,9 @@ const NotedApp = () => {
             <ScrollView
                 contentInsetAdjustmentBehavior="automatic"
                 keyboardDismissMode="interactive"
-                style={{ height: '100%', width: width }}
+                style={{ height: "100%", width: width }}
             >
-                {togglePreview ? (
+                {toggleEdit ? (
                     <Preview>{note}</Preview>
                 ) : (
                     <Editor note={note} handleChange={handleChange}></Editor>
@@ -42,7 +43,7 @@ const NotedApp = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        fontFamily: 'sans-serif',
+        fontFamily: "sans-serif",
     },
 });
 

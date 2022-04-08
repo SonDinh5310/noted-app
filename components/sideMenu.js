@@ -1,19 +1,26 @@
-import React, { useContext, useEffect } from "react";
-import { TouchableOpacity, View } from "react-native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import SignIn from "./signIn/signIn";
-import SignUp from "./signUp/signUp";
-import NotedApp from "../NotedApp";
-import UserProfile from "./userProfile";
-import Settings from "./settings";
-import CustomDrawer from "./customDrawer";
-import { AppContext } from "../utils/context";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import React from 'react';
+import { AppStore } from '../utils/zustand';
+import shallow from 'zustand/shallow';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { TouchableOpacity, View } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import SignIn from './signIn/signIn';
+import SignUp from './signUp/signUp';
+import NotedApp from '../NotedApp';
+import UserProfile from './userProfile';
+import Settings from './settings';
+import CustomDrawer from './customDrawer';
 
 const Drawer = createDrawerNavigator();
 
 const SideMenu = () => {
-    const { togglePreview, handleTogglePreview } = useContext(AppContext);
+    const { toggleEdit, setToggleEdit } = AppStore(
+        (state) => ({
+            toggleEdit: state.toggleEdit,
+            setToggleEdit: state.setToggleEdit,
+        }),
+        shallow
+    );
     return (
         <Drawer.Navigator
             drawerContent={(props) => <CustomDrawer {...props} />}
@@ -89,15 +96,13 @@ const SideMenu = () => {
                         <View
                             style={{
                                 flex: 1,
-                                flexDirection: "row",
-                                alignItems: "center",
+                                flexDirection: 'row',
+                                alignItems: 'center',
                                 marginRight: 10,
                             }}
                         >
-                            <TouchableOpacity
-                                onPress={() => handleTogglePreview()}
-                            >
-                                {togglePreview ? (
+                            <TouchableOpacity onPress={() => setToggleEdit()}>
+                                {toggleEdit ? (
                                     <MaterialIcons
                                         name="edit"
                                         size={22}
