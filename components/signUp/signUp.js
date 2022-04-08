@@ -8,8 +8,12 @@ import {
     usernameRegex,
     passwordRegex,
 } from '../../utils/regex';
+import { AppStore } from '../../utils/zustand';
+import shallow from 'zustand/shallow';
 
-const SignUp = () => {
+const axios = require('axios');
+
+const SignUp = ({ navigation }) => {
     const {
         control,
         watch,
@@ -24,9 +28,28 @@ const SignUp = () => {
             password: '',
         },
     });
-    const onSubmit = (data) => {
+    const { isLoading, setIsLoading } = AppStore(
+        (state) => ({
+            isLoading: state.isLoading,
+            setIsLoading: state.setIsLoading,
+        }),
+        shallow
+    );
+    const onSignUpPress = async (data) => {
+        setIsLoading(true);
+        delete data['confirm_password'];
         console.log(data);
-        reset(data);
+        await axios.post(
+            'https://noted-app-backend.herokuapp.com/api/user/register',
+            data
+        );
+        reset();
+        setIsLoading(false);
+        navigation.navigate('Sign In');
+        // console.log(result.headers['auth-token']);
+    };
+    const onToSignIn = () => {
+        navigation.navigate('Sign In');
     };
     return (
         <ScrollView>
@@ -98,8 +121,15 @@ const SignUp = () => {
             />
 
             <View>
-                <Button title="Sign up" onPress={handleSubmit(onSubmit)} />
+                <Button title="Sign up" onPress={handleSubmit(onSignUpPress)} />
             </View>
+
+            <Text>
+                Already have an account ?{' '}
+                <Text style={{ color: 'blue' }} onPress={() => onToSignIn()}>
+                    Sign in
+                </Text>
+            </Text>
         </ScrollView>
     );
 };

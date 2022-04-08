@@ -41,7 +41,7 @@ const CustomDrawer = (props) => {
                             marginTop: -10,
                         }}
                     >
-                        James Dinh
+                        ANON
                     </Text>
                 </View>
                 <View
