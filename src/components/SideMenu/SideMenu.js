@@ -1,15 +1,16 @@
 import React from 'react';
-import { AppStore } from '../utils/zustand';
 import shallow from 'zustand/shallow';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { AppStore } from '../../utils/zustand';
 import { TouchableOpacity, View } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import SignIn from './signIn/signIn';
-import SignUp from './signUp/signUp';
-import NotedApp from '../NotedApp';
-import UserProfile from './userProfile';
-import Settings from './settings';
-import CustomDrawer from './customDrawer';
+
+import SignIn from '../../screens/SignIn/SignIn';
+import SignUp from '../../screens/SignUp/SignUp';
+import NotedApp from '../../../NotedApp';
+import UserProfile from '../../screens/UserProfile/UserProfile';
+import Settings from '../../screens/Settings/Settings';
+import CustomDrawer from '../CustomDrawer/CustomDrawer';
 
 const Drawer = createDrawerNavigator();
 
@@ -46,6 +47,7 @@ const SideMenu = () => {
                 name="Sign In"
                 component={SignIn}
                 options={{
+                    headerShown: false,
                     drawerIcon: ({ color }) => (
                         <MaterialIcons
                             name="login"

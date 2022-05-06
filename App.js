@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import SideMenu from './components/sideMenu';
-import { AppContext } from './utils/context';
+import { AppContext } from './src/utils/context';
+import SideMenu from './src/components/SideMenu/SideMenu';
 
 export default function App() {
     const [togglePreview, setTogglePreview] = useState(false);

@@ -1,11 +1,13 @@
-import React from "react";
-import { Controller } from "react-hook-form";
-import { View, TextInput, Text, StyleSheet } from "react-native";
+import React from 'react';
+import { Controller } from 'react-hook-form';
+import { View, TextInput, Text, StyleSheet } from 'react-native';
+import tw from 'twrnc';
 
 const CustomTextInput = ({
     control,
     placeholder,
     name,
+    title,
     rules = {},
     secureTextEntry,
 }) => {
@@ -24,12 +26,14 @@ const CustomTextInput = ({
                     field: { onChange, value },
                     fieldState: { error },
                 }) => (
-                    <>
+                    <View style={tw`mt-6`}>
+                        <Text style={tw`text-xl mb-2`}>{title}</Text>
                         <View
-                            style={[
-                                styles.container,
-                                { borderColor: error ? "red" : "#e8e8e8" },
-                            ]}
+                            // style={[
+                            //     styles.container,
+                            //     { borderColor: error ? 'red' : '#e8e8e8' },
+                            // ]}
+                            style={tw`bg-[#E8E8E8] py-3.5 px-4 rounded-lg`}
                         >
                             <TextInput
                                 placeholder={placeholder}
@@ -40,12 +44,12 @@ const CustomTextInput = ({
                         </View>
                         {error && (
                             <Text
-                                style={{ color: "red", alignSelf: "stretch" }}
+                                style={{ color: 'red', alignSelf: 'stretch' }}
                             >
-                                {error.message || "*Error."}
+                                {error.message || '*Error.'}
                             </Text>
                         )}
-                    </>
+                    </View>
                 )}
             ></Controller>
 
@@ -58,9 +62,9 @@ const CustomTextInput = ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "white",
-        borderColor: "#e8e8e8",
-        width: "100%",
+        backgroundColor: 'white',
+        borderColor: '#e8e8e8',
+        width: '100%',
         borderRadius: 5,
         borderWidth: 1,
         padding: 10,

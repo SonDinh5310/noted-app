@@ -1,21 +1,24 @@
 import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { ScrollView, View, TextInput, Button, Text } from 'react-native';
-import CustomTextInput from '../CustomTextInput';
+import { useForm } from 'react-hook-form';
+import {
+    ScrollView,
+    View,
+    TouchableOpacity,
+    Text,
+    ActivityIndicator,
+} from 'react-native';
+import shallow from 'zustand/shallow';
+import tw from 'twrnc';
+
+import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
+import CustomButton from '../../components/CustomButton/CustomButton';
 import { emailRegex } from '../../utils/regex';
 import { AppStore } from '../../utils/zustand';
-import shallow from 'zustand/shallow';
 
 const axios = require('axios');
 
 const SignIn = ({ navigation }) => {
-    const {
-        control,
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
-    } = useForm({
+    const { control, handleSubmit, reset } = useForm({
         defaultValues: {
             email: '',
             password: '',
@@ -28,8 +31,8 @@ const SignIn = ({ navigation }) => {
         }),
         shallow
     );
+
     const onSignInPress = async (data) => {
-        // console.log(data);
         setIsLoading(true);
         const result = await axios.post(
             'https://noted-app-backend.herokuapp.com/api/user/login',
@@ -40,23 +43,19 @@ const SignIn = ({ navigation }) => {
         navigation.navigate('Profile');
         console.log(result);
     };
-
-    const onToSignUp = () => {
-        navigation.navigate('Sign Up');
-    };
-
     return (
         <>
-            {isLoading && (
-                <View>
-                    <Text>Loading...</Text>
-                </View>
-            )}
+            {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
             {!isLoading && (
-                <ScrollView>
+                <ScrollView style={tw`px-5 py-[100px]`}>
+                    <Text style={tw`text-3xl`}>Welcome!</Text>
+                    <Text style={tw`text-base text-[#505050] mb-2`}>
+                        Please sign in to continue
+                    </Text>
                     <CustomTextInput
-                        placeholder="Email"
+                        placeholder="example@gmail.com"
                         name="email"
+                        title="Email"
                         control={control}
                         rules={{
                             required: '*Email is required!',
@@ -68,29 +67,29 @@ const SignIn = ({ navigation }) => {
                     />
 
                     <CustomTextInput
-                        placeholder="Password"
+                        placeholder="•••••••••••"
                         name="password"
+                        title="Password"
                         control={control}
                         rules={{ required: '*Password is required!' }}
                         secureTextEntry={true}
                     />
-
-                    <View>
-                        <Button
-                            title="Sign In"
-                            onPress={handleSubmit(onSignInPress)}
-                        />
-                    </View>
-
-                    <Text>
-                        Don't have an account yet ?{' '}
-                        <Text
-                            style={{ color: 'blue' }}
-                            onPress={() => onToSignUp()}
-                        >
-                            Sign up
+                    <TouchableOpacity style={tw`my-3`}>
+                        <Text style={tw`text-[#898989] text-right`}>
+                            Forgot password?
                         </Text>
+                    </TouchableOpacity>
+                    <CustomButton
+                        title="Sign In"
+                        func={handleSubmit(onSignInPress)}
+                    ></CustomButton>
+                    <Text style={tw`my-2 text-center`}>
+                        Don't have an account yet?
                     </Text>
+                    <CustomButton
+                        title="Sign Up"
+                        func={() => navigation.navigate('Sign Up')}
+                    ></CustomButton>
                 </ScrollView>
             )}
         </>
