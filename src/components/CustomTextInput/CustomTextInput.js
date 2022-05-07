@@ -1,7 +1,7 @@
-import React from 'react';
-import { Controller } from 'react-hook-form';
-import { View, TextInput, Text, StyleSheet } from 'react-native';
-import tw from 'twrnc';
+import React from "react";
+import { Controller } from "react-hook-form";
+import { View, TextInput, Text, StyleSheet } from "react-native";
+import tw from "twrnc";
 
 const CustomTextInput = ({
     control,
@@ -11,6 +11,12 @@ const CustomTextInput = ({
     rules = {},
     secureTextEntry,
 }) => {
+    const icons = {
+        email: "mail-outline",
+        hidePassword: "hide-outline",
+        viewPassword: "show-outline",
+        name: "people",
+    };
     const onChange = (e) => {
         return {
             value: e.nativeEvent.text,
@@ -29,47 +35,33 @@ const CustomTextInput = ({
                     <View style={tw`mt-6`}>
                         <Text style={tw`text-xl mb-2`}>{title}</Text>
                         <View
-                            // style={[
-                            //     styles.container,
-                            //     { borderColor: error ? 'red' : '#e8e8e8' },
-                            // ]}
-                            style={tw`bg-[#E8E8E8] py-3.5 px-4 rounded-lg`}
+                            style={tw.style([
+                                "bg-[#E8E8E8]",
+                                "py-3.5",
+                                "px-4",
+                                "rounded-lg",
+                            ])}
                         >
                             <TextInput
                                 placeholder={placeholder}
                                 onChangeText={(value) => onChange(value)}
                                 value={value}
                                 secureTextEntry={secureTextEntry}
+                                style={tw.style("text-xl", {
+                                    outlineStyle: "none",
+                                })}
                             ></TextInput>
                         </View>
                         {error && (
-                            <Text
-                                style={{ color: 'red', alignSelf: 'stretch' }}
-                            >
-                                {error.message || '*Error.'}
+                            <Text style={tw`text-red-500 text-left`}>
+                                {error.message || "*Error."}
                             </Text>
                         )}
                     </View>
                 )}
             ></Controller>
-
-            {/* {errors.name && (
-                <Text style={{ color: 'red' }}>*This field is required.</Text>
-            )} */}
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: 'white',
-        borderColor: '#e8e8e8',
-        width: '100%',
-        borderRadius: 5,
-        borderWidth: 1,
-        padding: 10,
-        marginVertical: 5,
-    },
-});
 
 export default CustomTextInput;
