@@ -68,7 +68,7 @@ const SignUp = ({ navigation }) => {
                         }}
                     />
 
-                    <CustomTextInput
+                    {/* <CustomTextInput
                         placeholder="Username"
                         name="username"
                         control={control}
@@ -79,7 +79,7 @@ const SignUp = ({ navigation }) => {
                                 message: 'Invalid Username',
                             },
                         }}
-                    />
+                    /> */}
 
                     <CustomTextInput
                         placeholder="Email"

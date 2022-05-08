@@ -75,7 +75,7 @@ const SignIn = ({ navigation }) => {
                         secureTextEntry={true}
                     />
                     <TouchableOpacity style={tw`my-3`}>
-                        <Text style={tw`text-[#898989] text-right`}>
+                        <Text style={tw`text-[#898989] text-base text-right`}>
                             Forgot password?
                         </Text>
                     </TouchableOpacity>
@@ -83,7 +83,7 @@ const SignIn = ({ navigation }) => {
                         title="Sign In"
                         func={handleSubmit(onSignInPress)}
                     ></CustomButton>
-                    <Text style={tw`my-2 text-center`}>
+                    <Text style={tw`my-2 text-base text-center`}>
                         Don't have an account yet?
                     </Text>
                     <CustomButton
