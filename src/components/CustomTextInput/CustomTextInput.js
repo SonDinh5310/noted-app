@@ -15,6 +15,7 @@ const CustomTextInput = ({
     const icons = {
         email: 'email',
         password: 'visibility-off',
+        confirm_password: 'visibility-off',
         viewPassword: 'visibility',
         name: 'group',
     };

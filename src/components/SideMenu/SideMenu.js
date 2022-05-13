@@ -61,6 +61,7 @@ const SideMenu = () => {
                 name="Sign Up"
                 component={SignUp}
                 options={{
+                    headerShown: false,
                     drawerIcon: ({ color }) => (
                         <MaterialIcons
                             name="assignment"

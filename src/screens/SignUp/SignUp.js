@@ -1,14 +1,8 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import {
-    ScrollView,
-    View,
-    TextInput,
-    Button,
-    Text,
-    ActivityIndicator,
-} from 'react-native';
+import { ScrollView, Text, ActivityIndicator } from 'react-native';
 import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
+import CustomButton from '../../components/CustomButton/CustomButton';
 import {
     emailRegex,
     nameRegex,
@@ -17,7 +11,7 @@ import {
 } from '../../utils/regex';
 import { AppStore } from '../../utils/zustand';
 import shallow from 'zustand/shallow';
-
+import tw from 'twrnc';
 const axios = require('axios');
 
 const SignUp = ({ navigation }) => {
@@ -54,9 +48,14 @@ const SignUp = ({ navigation }) => {
         <>
             {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
             {!isLoading && (
-                <ScrollView>
+                <ScrollView style={tw`px-5 pt-[100px]`}>
+                    <Text style={tw`text-3xl`}>Sign Up</Text>
+                    <Text style={tw`text-base text-[#505050] mb-2`}>
+                        Take the first step
+                    </Text>
                     <CustomTextInput
-                        placeholder="Name"
+                        placeholder="John Doe"
+                        title="Name"
                         name="name"
                         control={control}
                         rules={{
@@ -82,7 +81,8 @@ const SignUp = ({ navigation }) => {
                     /> */}
 
                     <CustomTextInput
-                        placeholder="Email"
+                        placeholder="example@gmail.com"
+                        title="Email"
                         name="email"
                         control={control}
                         rules={{
@@ -95,7 +95,8 @@ const SignUp = ({ navigation }) => {
                     />
 
                     <CustomTextInput
-                        placeholder="Password"
+                        placeholder="•••••••••••"
+                        title="Password"
                         name="password"
                         control={control}
                         rules={{
@@ -110,27 +111,30 @@ const SignUp = ({ navigation }) => {
                     />
 
                     <CustomTextInput
-                        placeholder="Confirm Password"
+                        placeholder="•••••••••••"
+                        title="Confirm Password"
                         name="confirm_password"
                         control={control}
                         rules={{
                             required: '*Please confirm your password!',
                             validate: (value) =>
                                 value === watch('password') ||
-                                'The passwords do not match',
+                                'Both passwords must match',
                         }}
                         secureTextEntry={true}
                     />
 
-                    <Button
+                    <CustomButton
                         title="Sign Up"
-                        onPress={handleSubmit(onSignUpPress)}
-                    />
-
-                    <Button
-                        title="To Sign Up"
-                        onPress={() => navigation.navigate('Sign In')}
-                    />
+                        func={handleSubmit(onSignUpPress)}
+                    ></CustomButton>
+                    <Text style={tw`mt-2 mb-[-10px] text-base text-center`}>
+                        Already have an account ?
+                    </Text>
+                    <CustomButton
+                        title="Sign In"
+                        func={() => navigation.navigate('Sign In')}
+                    ></CustomButton>
                 </ScrollView>
             )}
         </>

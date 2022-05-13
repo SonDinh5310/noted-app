@@ -47,7 +47,7 @@ const SignIn = ({ navigation }) => {
         <>
             {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
             {!isLoading && (
-                <ScrollView style={tw`px-5 py-[100px]`}>
+                <ScrollView style={tw`px-5 pt-[100px]`}>
                     <Text style={tw`text-3xl`}>Welcome!</Text>
                     <Text style={tw`text-base text-[#505050] mb-2`}>
                         Please sign in to continue
@@ -72,9 +72,9 @@ const SignIn = ({ navigation }) => {
                         title="Password"
                         control={control}
                         rules={{ required: '*Password is required!' }}
-                        secureTextEntry={true}
+                        // secureTextEntry={true}
                     />
-                    <TouchableOpacity style={tw`my-3`}>
+                    <TouchableOpacity style={tw`mt-3 mb-[-5px]`}>
                         <Text style={tw`text-[#898989] text-base text-right`}>
                             Forgot password?
                         </Text>
@@ -83,7 +83,7 @@ const SignIn = ({ navigation }) => {
                         title="Sign In"
                         func={handleSubmit(onSignInPress)}
                     ></CustomButton>
-                    <Text style={tw`my-2 text-base text-center`}>
+                    <Text style={tw`mt-2 mb-[-10px] text-base text-center`}>
                         Don't have an account yet?
                     </Text>
                     <CustomButton
