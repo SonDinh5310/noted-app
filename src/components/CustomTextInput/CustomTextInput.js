@@ -10,7 +10,7 @@ const CustomTextInput = ({ control, placeholder, name, title, rules = {} }) => {
         email: "email",
         password: "visibility-off",
         confirm_password: "visibility-off",
-        viewPassword: "visibility",
+        showPassword: "visibility",
         name: "group",
     };
     const onChange = (e) => {
@@ -84,7 +84,13 @@ const CustomTextInput = ({ control, placeholder, name, title, rules = {} }) => {
                                 (name === "password" ||
                                     name === "confirm_password") && (
                                     <Icon
-                                        name={icons[name]}
+                                        name={
+                                            icons[
+                                                passwordHide
+                                                    ? name
+                                                    : "showPassword"
+                                            ]
+                                        }
                                         size={22}
                                         onPress={() => togglePassword()}
                                     />
