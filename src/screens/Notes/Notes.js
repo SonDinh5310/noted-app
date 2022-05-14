@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, ScrollView, View, TextInput } from "react-native";
+import tw from "twrnc";
 
 function Notes() {
     return (
