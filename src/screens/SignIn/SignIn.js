@@ -1,27 +1,27 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
 import {
     ScrollView,
     View,
     TouchableOpacity,
     Text,
     ActivityIndicator,
-} from 'react-native';
-import shallow from 'zustand/shallow';
-import tw from 'twrnc';
+} from "react-native";
+import shallow from "zustand/shallow";
+import tw from "twrnc";
 
-import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
-import CustomButton from '../../components/CustomButton/CustomButton';
-import { emailRegex } from '../../utils/regex';
-import { AppStore } from '../../utils/zustand';
+import { emailRegex } from "../../utils/regex";
+import { AppStore } from "../../utils/zustand";
+import CustomTextInput from "../../components/CustomTextInput/CustomTextInput";
+import CustomButton from "../../components/CustomButton/CustomButton";
 
-const axios = require('axios');
+const axios = require("axios");
 
 const SignIn = ({ navigation }) => {
     const { control, handleSubmit, reset } = useForm({
         defaultValues: {
-            email: '',
-            password: '',
+            email: "",
+            password: "",
         },
     });
     const { isLoading, setIsLoading } = AppStore(
@@ -35,19 +35,19 @@ const SignIn = ({ navigation }) => {
     const onSignInPress = async (data) => {
         setIsLoading(true);
         const result = await axios.post(
-            'https://noted-app-backend.herokuapp.com/api/user/login',
+            "https://noted-app-backend.herokuapp.com/api/user/login",
             data
         );
         reset();
         setIsLoading(false);
-        navigation.navigate('Profile');
+        navigation.navigate("Profile");
         console.log(result);
     };
     return (
         <>
             {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
             {!isLoading && (
-                <ScrollView style={tw`px-5 pt-[100px]`}>
+                <ScrollView style={tw.style(["p-5"])}>
                     <Text style={tw`text-3xl`}>Welcome!</Text>
                     <Text style={tw`text-base text-[#505050] mb-2`}>
                         Please sign in to continue
@@ -58,10 +58,10 @@ const SignIn = ({ navigation }) => {
                         title="Email"
                         control={control}
                         rules={{
-                            required: '*Email is required!',
+                            required: "*Email is required!",
                             pattern: {
                                 value: emailRegex,
-                                message: '*Invalid email',
+                                message: "*Invalid email",
                             },
                         }}
                     />
@@ -71,8 +71,7 @@ const SignIn = ({ navigation }) => {
                         name="password"
                         title="Password"
                         control={control}
-                        rules={{ required: '*Password is required!' }}
-                        // secureTextEntry={true}
+                        rules={{ required: "*Password is required!" }}
                     />
                     <TouchableOpacity style={tw`mt-3 mb-[-5px]`}>
                         <Text style={tw`text-[#898989] text-base text-right`}>
@@ -88,7 +87,7 @@ const SignIn = ({ navigation }) => {
                     </Text>
                     <CustomButton
                         title="Sign Up"
-                        func={() => navigation.navigate('Sign Up')}
+                        func={() => navigation.navigate("Sign Up")}
                     ></CustomButton>
                 </ScrollView>
             )}
