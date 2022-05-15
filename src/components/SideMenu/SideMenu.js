@@ -9,6 +9,7 @@ import SignIn from '../../screens/SignIn/SignIn';
 import SignUp from '../../screens/SignUp/SignUp';
 import NotedApp from '../../../NotedApp';
 import UserProfile from '../../screens/UserProfile/UserProfile';
+import NotesList from '../NotesList/NotesList';
 import Settings from '../../screens/Settings/Settings';
 import CustomDrawer from '../CustomDrawer/CustomDrawer';
 
@@ -84,7 +85,7 @@ const SideMenu = () => {
                     ),
                 }}
             />
-            <Drawer.Screen
+            {/* <Drawer.Screen
                 name="Note"
                 component={NotedApp}
                 options={{
@@ -127,6 +128,19 @@ const SideMenu = () => {
                                 ></MaterialIcons>
                             </TouchableOpacity>
                         </View>
+                    ),
+                }}
+            /> */}
+            <Drawer.Screen
+                name="Notes"
+                component={NotesList}
+                options={{
+                    drawerIcon: ({ color }) => (
+                        <MaterialIcons
+                            name="description"
+                            size={22}
+                            color={color}
+                        ></MaterialIcons>
                     ),
                 }}
             />
