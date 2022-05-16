@@ -1,11 +1,11 @@
-import React from 'react';
-import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
-import tw from 'twrnc';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React from "react";
+import { View, ScrollView, Text, TouchableOpacity } from "react-native";
+import tw from "twrnc";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 function NotesList() {
     return (
-        <View style={tw`my-5`}>
+        <View>
             <View style={tw` flex flex-row justify-around`}>
                 <TouchableOpacity>
                     <Text>All Notes</Text>
@@ -17,7 +17,7 @@ function NotesList() {
                     <Text>Highlighted</Text>
                 </TouchableOpacity>
             </View>
-            <ScrollView style={tw`px-5 mt-4`}>
+            <ScrollView style={tw`mt-4`}>
                 <View style={tw`p-3 mb-3 bg-[#A8D7E0] rounded-lg`}>
                     <View style={tw`flex flex-row items-center`}>
                         <Icon name="description" size={22} color="black"></Icon>

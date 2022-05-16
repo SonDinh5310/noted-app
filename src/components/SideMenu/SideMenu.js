@@ -1,17 +1,17 @@
-import React from 'react';
-import shallow from 'zustand/shallow';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { AppStore } from '../../utils/zustand';
-import { TouchableOpacity, View } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import React from "react";
+import shallow from "zustand/shallow";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { AppStore } from "../../utils/zustand";
+import { TouchableOpacity, View } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import SignIn from '../../screens/SignIn/SignIn';
-import SignUp from '../../screens/SignUp/SignUp';
-import NotedApp from '../../../NotedApp';
-import UserProfile from '../../screens/UserProfile/UserProfile';
-import NotesList from '../NotesList/NotesList';
-import Settings from '../../screens/Settings/Settings';
-import CustomDrawer from '../CustomDrawer/CustomDrawer';
+import SignIn from "../../screens/SignIn/SignIn";
+import SignUp from "../../screens/SignUp/SignUp";
+import NotedApp from "../../../NotedApp";
+import UserProfile from "../../screens/UserProfile/UserProfile";
+import Notes from "../../screens/Notes/Notes";
+import Settings from "../../screens/Settings/Settings";
+import CustomDrawer from "../CustomDrawer/CustomDrawer";
 
 const Drawer = createDrawerNavigator();
 
@@ -133,7 +133,7 @@ const SideMenu = () => {
             /> */}
             <Drawer.Screen
                 name="Notes"
-                component={NotesList}
+                component={Notes}
                 options={{
                     drawerIcon: ({ color }) => (
                         <MaterialIcons
