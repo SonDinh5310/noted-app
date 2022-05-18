@@ -8,10 +8,9 @@ import {
     ScrollView,
     TouchableOpacity,
 } from "react-native";
-import Editor from "./components/editor";
-import Preview from "./components/preview";
-import { AppContext } from "./utils/context";
-import { AppStore } from "./utils/zustand";
+import Editor from "./src/components/Editor/Editor";
+import Preview from "./src/components/Preview/Preview";
+import { AppStore } from "./src/utils/zustand";
 
 const NotedApp = () => {
     const [note, setNote] = useState("");

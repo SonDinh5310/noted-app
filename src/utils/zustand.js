@@ -5,4 +5,7 @@ export const AppStore = create((set) => ({
     setIsLoading: (value) => set((state) => ({ isLoading: value })),
     toggleEdit: false,
     setToggleEdit: () => set((state) => ({ toggleEdit: !state.toggleEdit })),
+    togglePreview: false,
+    setTogglePreview: () =>
+        set((state) => ({ togglePreview: !state.togglePreview })),
 }));

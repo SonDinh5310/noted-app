@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import SideMenu from './components/sideMenu';
-import { AppContext } from './utils/context';
+import { StatusBar } from 'react-native';
+import SideMenu from './src/components/SideMenu/SideMenu';
 
 export default function App() {
-    const [togglePreview, setTogglePreview] = useState(false);
-    const handleTogglePreview = () => {
-        setTogglePreview(!togglePreview);
-    };
     return (
-        <AppContext.Provider value={{ togglePreview, handleTogglePreview }}>
-            <NavigationContainer>
-                <SideMenu></SideMenu>
-            </NavigationContainer>
-        </AppContext.Provider>
+        <NavigationContainer>
+            {/* <StatusBar animated={true} backgroundColor="black" /> */}
+            <SideMenu></SideMenu>
+        </NavigationContainer>
     );
 }

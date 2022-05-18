@@ -1,15 +1,17 @@
-import React from 'react';
-import { AppStore } from '../utils/zustand';
-import shallow from 'zustand/shallow';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { TouchableOpacity, View } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import SignIn from './signIn/signIn';
-import SignUp from './signUp/signUp';
-import NotedApp from '../NotedApp';
-import UserProfile from './userProfile';
-import Settings from './settings';
-import CustomDrawer from './customDrawer';
+import React from "react";
+import shallow from "zustand/shallow";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { AppStore } from "../../utils/zustand";
+import { TouchableOpacity, View } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
+import SignIn from "../../screens/SignIn/SignIn";
+import SignUp from "../../screens/SignUp/SignUp";
+import NotedApp from "../../../NotedApp";
+import UserProfile from "../../screens/UserProfile/UserProfile";
+import Notes from "../../screens/Notes/Notes";
+import Settings from "../../screens/Settings/Settings";
+import CustomDrawer from "../CustomDrawer/CustomDrawer";
 
 const Drawer = createDrawerNavigator();
 
@@ -46,6 +48,7 @@ const SideMenu = () => {
                 name="Sign In"
                 component={SignIn}
                 options={{
+                    headerShown: false,
                     drawerIcon: ({ color }) => (
                         <MaterialIcons
                             name="login"
@@ -59,6 +62,7 @@ const SideMenu = () => {
                 name="Sign Up"
                 component={SignUp}
                 options={{
+                    headerShown: false,
                     drawerIcon: ({ color }) => (
                         <MaterialIcons
                             name="assignment"
@@ -81,7 +85,7 @@ const SideMenu = () => {
                     ),
                 }}
             />
-            <Drawer.Screen
+            {/* <Drawer.Screen
                 name="Note"
                 component={NotedApp}
                 options={{
@@ -124,6 +128,19 @@ const SideMenu = () => {
                                 ></MaterialIcons>
                             </TouchableOpacity>
                         </View>
+                    ),
+                }}
+            /> */}
+            <Drawer.Screen
+                name="Notes"
+                component={Notes}
+                options={{
+                    drawerIcon: ({ color }) => (
+                        <MaterialIcons
+                            name="description"
+                            size={22}
+                            color={color}
+                        ></MaterialIcons>
                     ),
                 }}
             />
