@@ -6,7 +6,7 @@ import SideMenu from './src/components/SideMenu/SideMenu';
 export default function App() {
     return (
         <NavigationContainer>
-            <StatusBar animated={true} backgroundColor="black" />
+            {/* <StatusBar animated={true} backgroundColor="black" /> */}
             <SideMenu></SideMenu>
         </NavigationContainer>
     );

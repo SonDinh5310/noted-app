@@ -11,13 +11,10 @@ import NotesList from '../../components/NotesList/NotesList';
 import tw from 'twrnc';
 
 function Notes() {
-    const height = Dimensions.get('window').height;
+    // const height = Dimensions.get('window').height;
+    // console.log(height);
     return (
-        <View
-            style={tw.style('flex', 'flex-col', 'px-5', 'py-2.5', 'bg-white', {
-                height: height,
-            })}
-        >
+        <View style={tw.style('px-5', 'py-2.5', 'bg-white', 'h-full')}>
             <Text style={tw`text-[28px]`}>Hello, Nam! 👋🏻</Text>
             <TextInput
                 placeholder="Search your note..."
