@@ -4,10 +4,20 @@ import {
     DrawerContentScrollView,
     DrawerItemList,
 } from '@react-navigation/drawer';
+import { AuthStore } from '../../context/zustand';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const CustomDrawer = (props) => {
+    const { userToken, setUserToken } = AuthStore((state) => ({
+        userToken: state.userToken,
+        setUserToken: state.setUserToken,
+    }));
+    const handleSignOut = () => {
+        console.log('sign out clicked');
+        setUserToken(null);
+        console.log(userToken);
+    };
     return (
         <View style={{ flex: 1 }}>
             <DrawerContentScrollView
@@ -58,7 +68,10 @@ const CustomDrawer = (props) => {
                     borderTopColor: '#ccc',
                 }}
             >
-                <TouchableOpacity style={{ paddingVertical: 15 }}>
+                <TouchableOpacity
+                    style={{ paddingVertical: 15 }}
+                    onPress={() => handleSignOut()}
+                >
                     <View
                         style={{ flexDirection: 'row', alignItems: 'center' }}
                     >
