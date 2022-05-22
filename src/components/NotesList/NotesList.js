@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import CustomFloatingButton from '../CustomFloatingButton/CustomFloatingButton';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 function NotesList() {
     return (
         <View style={tw`w-full h-full flex `}>
-            <View style={tw`mb-2 flex-row justify-between`}>
+            <View style={tw`mb-2 flex-row justify-around`}>
                 <TouchableOpacity>
                     <Text>All Notes</Text>
                 </TouchableOpacity>
@@ -18,8 +19,8 @@ function NotesList() {
                 </TouchableOpacity>
             </View>
 
-            <View style={tw`flex-grow`}>
-                <ScrollView>
+            <View style={tw`h-4/5`}>
+                <ScrollView style={tw`h-full`}>
                     <View style={tw`p-3 mb-3 bg-[#A8D7E0] rounded-lg`}>
                         <View style={tw`flex-row items-center`}>
                             <Icon
@@ -225,6 +226,8 @@ function NotesList() {
                     </View>
                 </ScrollView>
             </View>
+
+            <CustomFloatingButton></CustomFloatingButton>
         </View>
     );
 }

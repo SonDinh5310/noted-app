@@ -14,11 +14,20 @@ function Notes() {
     // const height = Dimensions.get('window').height;
     // console.log(height);
     return (
-        <View style={tw.style('px-5', 'py-2.5', 'bg-white', 'h-full')}>
+        <View
+            style={tw.style(
+                'flex',
+                'flex-col',
+                'px-5',
+                'pt-5',
+                'bg-white',
+                'h-full'
+            )}
+        >
             <Text style={tw`text-[28px]`}>Hello, Nam! 👋🏻</Text>
             <TextInput
                 placeholder="Search your note..."
-                style={tw`p-3.5 my-2.5 bg-neutral-100 text-[16px] rounded-lg`}
+                style={tw`w-full p-3.5 my-2.5 bg-neutral-100 text-[16px] rounded-lg`}
             ></TextInput>
             <NotesList></NotesList>
             {/* <TouchableOpacity
