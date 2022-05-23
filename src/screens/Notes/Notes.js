@@ -8,18 +8,17 @@ import {
     Dimensions,
 } from 'react-native';
 import NotesList from '../../components/NotesList/NotesList';
+import CustomFloatingButton from '../../components/CustomFloatingButton/CustomFloatingButton';
 import tw from 'twrnc';
 
-function Notes() {
-    // const height = Dimensions.get('window').height;
-    // console.log(height);
+function Notes({ navigation }) {
     return (
         <View
             style={tw.style(
                 'flex',
                 'flex-col',
                 'px-5',
-                'pt-5',
+                'pt-3',
                 'bg-white',
                 'h-full'
             )}
@@ -30,11 +29,11 @@ function Notes() {
                 style={tw`w-full p-3.5 my-2.5 bg-neutral-100 text-[16px] rounded-lg`}
             ></TextInput>
             <NotesList></NotesList>
-            {/* <TouchableOpacity
-                style={tw`absolute bottom-2.5 right-2.5 bg-[#384D95] rounded-full`}
-            >
-                <Text>+</Text>
-            </TouchableOpacity> */}
+            <CustomFloatingButton
+                name="note-add"
+                size={33}
+                onPress={() => navigation.navigate('Editor')}
+            />
         </View>
     );
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
-import CustomFloatingButton from '../CustomFloatingButton/CustomFloatingButton';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -226,8 +225,6 @@ function NotesList() {
                     </View>
                 </ScrollView>
             </View>
-
-            <CustomFloatingButton></CustomFloatingButton>
         </View>
     );
 }

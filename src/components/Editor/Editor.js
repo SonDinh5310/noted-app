@@ -1,71 +1,62 @@
-import React, { useRef } from 'react';
-import {
-    StyleSheet,
-    TextInput,
-    Dimensions,
-    Text,
-    Platform,
-    KeyboardAvoidingView,
-    ScrollView,
-} from 'react-native';
+import React, { useState } from 'react';
+import { Alert, TextInput, Dimensions, View, ScrollView } from 'react-native';
+import CustomFloatingButton from '../CustomFloatingButton/CustomFloatingButton';
 import { useHeaderHeight } from '@react-navigation/elements';
-import {
-    actions,
-    RichEditor,
-    RichToolbar,
-} from 'react-native-pell-rich-editor';
+import tw from 'twrnc';
 
 const height = Dimensions.get('window').height;
 
-const Editor = ({ note, handleChange }) => {
-    // return (
-    //     <TextInput
-    //         multiline={true}
-    //         autoFocus={true}
-    //         placeholder="write your code here"
-    //         style={styles.editor}
-    //         value={note}
-    //         onChangeText={(text) => handleChange(text)}
-    //     ></TextInput>
-    // );
-    const richText = useRef();
-    const toolbarActions = [
-        actions.setBold,
-        actions.setItalic,
-        actions.setUnderline,
-        actions.setStrikeThrough,
-        actions.insertBulletsList,
-        actions.insertOrderedList,
-        actions.insertImage,
-        actions.insertVideo,
-    ];
-    return (
-        <SafeAreaView>
-            <ScrollView>
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                    keyboardVerticalOffset={useHeaderHeight() + 64}
-                >
-                    <RichEditor
-                        onChange={(text) => handleChange(text)}
-                    ></RichEditor>
-                </KeyboardAvoidingView>
-            </ScrollView>
+const Editor = ({ navigation }) => {
+    const [title, setTitle] = useState('');
+    const [data, setData] = useState('');
 
-            <RichToolbar editor={richText} actions={toolbarActions} />
-        </SafeAreaView>
+    const handleChange = (value, state) => {
+        return state === 'title' ? setTitle(value) : setData(value);
+    };
+
+    const handleSave = () => {
+        if (!title) {
+            return Alert.alert(
+                'Title missing',
+                'Give your note a name!',
+                [
+                    {
+                        text: 'OK',
+                        style: 'cancel',
+                    },
+                ],
+                { cancelable: true }
+            );
+        }
+        navigation.goBack();
+    };
+
+    return (
+        <>
+            <ScrollView style={tw`bg-white`} contentContainerStyle={tw`p-5`}>
+                <TextInput
+                    placeholder="Give your note a title"
+                    style={tw`text-[20px] mb-2 py-2 bg-white font-bold border-b-2 border-b-slate-200`}
+                    value={title}
+                    onChangeText={(text) => handleChange(text, 'title')}
+                />
+                <TextInput
+                    multiline={true}
+                    placeholder="Write your note here..."
+                    style={tw.style('h-full', 'bg-white', 'text-[18px]', {
+                        textAlignVertical: 'top',
+                    })}
+                    value={data}
+                    onChangeText={(text) => handleChange(text, 'data')}
+                ></TextInput>
+            </ScrollView>
+            <CustomFloatingButton
+                name="done"
+                size={33}
+                onPress={() => handleSave()}
+            />
+        </>
     );
 };
-
-const styles = StyleSheet.create({
-    editor: {
-        height: height,
-        textAlignVertical: 'top',
-        backgroundColor: 'black',
-        color: 'white',
-        fontSize: 16,
-        padding: 10,
-    },
-});
 
 export default Editor;

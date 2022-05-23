@@ -11,7 +11,7 @@ import CustomDrawer from '../CustomDrawer/CustomDrawer';
 
 const Drawer = createDrawerNavigator();
 
-const SideMenu = () => {
+const SideMenu = ({ navigation }) => {
     // const { toggleEdit, setToggleEdit } = AppStore((state) => ({
     //     toggleEdit: state.toggleEdit,
     //     setToggleEdit: state.setToggleEdit,
