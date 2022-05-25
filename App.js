@@ -7,7 +7,7 @@ import { AuthStore, AppStore } from './src/context/zustand';
 import SignIn from './src/screens/SignIn/SignIn';
 import SignUp from './src/screens/SignUp/SignUp';
 import SideMenu from './src/components/SideMenu/SideMenu';
-import Editor from './src/components/Editor/Editor';
+import Editor from './src/screens/Editor/Editor';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,7 +31,7 @@ export default function App() {
                 <NavigationContainer>
                     <StatusBar animated={true} backgroundColor="black" />
                     <Stack.Navigator>
-                        {userToken ? (
+                        {userToken !== null ? (
                             <>
                                 <Stack.Screen
                                     name="Side Menu"

@@ -14,9 +14,7 @@ const CustomDrawer = (props) => {
         setUserToken: state.setUserToken,
     }));
     const handleSignOut = () => {
-        console.log('sign out clicked');
         setUserToken(null);
-        console.log(userToken);
     };
     return (
         <View style={{ flex: 1 }}>

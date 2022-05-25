@@ -1,13 +1,13 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { ScrollView, View, TouchableOpacity, Text } from 'react-native';
-import { AuthStore } from '../../context/zustand';
+import { AuthStore, AppStore } from '../../context/zustand';
 import tw from 'twrnc';
 
 import { emailRegex } from '../../utils/regex';
-import { AppStore } from '../../context/zustand';
 import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
+import { handleUserStorageCheck } from '../../utils/helpers';
 
 const axios = require('axios');
 
@@ -26,6 +26,9 @@ const SignIn = ({ navigation }) => {
         userToken: state.userToken,
         setUserToken: state.setUserToken,
     }));
+    const { setUserData } = AppStore((state) => ({
+        setUserData: state.setUserData,
+    }));
 
     const onSignInPress = async (data) => {
         try {
@@ -34,8 +37,9 @@ const SignIn = ({ navigation }) => {
                 'https://noted-app-backend.herokuapp.com/api/user/login',
                 data
             );
+            setUserData(result.data);
             setUserToken(result.headers['auth-token']);
-            console.log(userToken);
+            handleUserStorageCheck(result.data._id);
             reset();
         } catch (error) {
             console.log(error);

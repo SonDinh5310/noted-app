@@ -10,6 +10,8 @@ export const AppStore = create((set) => ({
     togglePreview: false,
     setTogglePreview: () =>
         set((state) => ({ togglePreview: !state.togglePreview })),
+    userData: null,
+    setUserData: (data) => set(() => ({ userData: data })),
 }));
 
 export const AuthStore = create(

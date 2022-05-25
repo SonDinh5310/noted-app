@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
 import { Alert, TextInput, Dimensions, View, ScrollView } from 'react-native';
-import CustomFloatingButton from '../CustomFloatingButton/CustomFloatingButton';
+import CustomFloatingButton from '../../components/CustomFloatingButton/CustomFloatingButton';
 import { useHeaderHeight } from '@react-navigation/elements';
+import { AppStore } from '../../context/zustand';
 import tw from 'twrnc';
+import { saveNoteToStorage } from '../../utils/helpers';
+import { v4 as uuidv4 } from 'uuid';
 
 const height = Dimensions.get('window').height;
 
-const Editor = ({ navigation }) => {
+const Editor = ({ navigation, route }) => {
     const [title, setTitle] = useState('');
     const [data, setData] = useState('');
 
+    const { userData } = AppStore((state) => ({
+        userData: state.userData,
+    }));
+    // const { note_id, name, content } = route.params;
+    // console.log(route.params);
     const handleChange = (value, state) => {
         return state === 'title' ? setTitle(value) : setData(value);
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (!title) {
             return Alert.alert(
                 'Title missing',
@@ -28,7 +36,27 @@ const Editor = ({ navigation }) => {
                 { cancelable: true }
             );
         }
-        navigation.goBack();
+
+        // try {
+        //     if (!note_id) {
+        //         const id = uuidv4();
+        //         saveNoteToStorage(userData._id, id, {
+        //             note_id: id,
+        //             name: title,
+        //             content: data,
+        //         });
+        //         return;
+        //     }
+        //     saveNoteToStorage(userData._id, note_id, {
+        //         note_id: note_id,
+        //         name: title,
+        //         content: data,
+        //     });
+        // } catch (error) {
+        //     console.log(error);
+        // } finally {
+        //     navigation.goBack();
+        // }
     };
 
     return (

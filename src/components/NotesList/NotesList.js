@@ -2,8 +2,16 @@ import React from 'react';
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppStore } from '../../context/zustand';
+import { getAllNote } from '../../utils/helpers';
 
 function NotesList() {
+    const { userData } = AppStore((state) => ({
+        userData: state.userData,
+    }));
+    // const userNotes = getAllNote(userData._id);
+    // console.log(userNotes);
     return (
         <View style={tw`w-full h-full flex `}>
             <View style={tw`mb-2 flex-row justify-around`}>
