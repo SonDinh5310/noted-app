@@ -10,8 +10,8 @@ export const AppStore = create((set) => ({
     togglePreview: false,
     setTogglePreview: () =>
         set((state) => ({ togglePreview: !state.togglePreview })),
-    userData: null,
-    setUserData: (data) => set(() => ({ userData: data })),
+    isUpdate: false,
+    setIsUpdate: () => set((state) => ({ isUpdate: !state.isUpdate })),
 }));
 
 export const AuthStore = create(
@@ -19,6 +19,8 @@ export const AuthStore = create(
         (set) => ({
             userToken: null,
             setUserToken: (token) => set(() => ({ userToken: token })),
+            userData: null,
+            setUserData: (data) => set(() => ({ userData: data })),
         }),
         {
             name: 'local-storage',

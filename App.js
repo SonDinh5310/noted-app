@@ -15,6 +15,7 @@ export default function App() {
     const { userToken } = AuthStore((state) => ({
         userToken: state.userToken,
     }));
+    // console.log(userToken);
     const { isLoading } = AppStore((state) => ({
         isLoading: state.isLoading,
     }));
@@ -24,14 +25,14 @@ export default function App() {
                 <ActivityIndicator
                     size="large"
                     color="#0000ff"
-                    style={{ margin: 'auto' }}
+                    // style={{ marginVertical: 'auto' }}
                 />
             )}
             {!isLoading && (
                 <NavigationContainer>
                     <StatusBar animated={true} backgroundColor="black" />
                     <Stack.Navigator>
-                        {userToken !== null ? (
+                        {userToken !== null && userToken !== undefined ? (
                             <>
                                 <Stack.Screen
                                     name="Side Menu"

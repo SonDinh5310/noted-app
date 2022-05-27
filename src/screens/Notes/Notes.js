@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Text,
     ScrollView,
@@ -12,6 +12,12 @@ import CustomFloatingButton from '../../components/CustomFloatingButton/CustomFl
 import tw from 'twrnc';
 
 function Notes({ navigation }) {
+    // const [update, setUpdate] = useState(false);
+
+    // const handleUpdate = () => {
+    //     setUpdate(!update);
+    // };
+
     return (
         <View
             style={tw.style(

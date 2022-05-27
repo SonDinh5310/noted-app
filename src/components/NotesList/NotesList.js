@@ -1,17 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import NoteItem from '../NoteItem/NoteItem';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AppStore } from '../../context/zustand';
+import { AuthStore, AppStore } from '../../context/zustand';
 import { getAllNote } from '../../utils/helpers';
 
 function NotesList() {
-    const { userData } = AppStore((state) => ({
+    const [notes, setNotes] = useState([]);
+
+    const { userData } = AuthStore((state) => ({
         userData: state.userData,
     }));
-    // const userNotes = getAllNote(userData._id);
-    // console.log(userNotes);
+
+    const { isUpdate } = AppStore((state) => ({
+        isUpdate: state.userData,
+    }));
+
+    useEffect(() => {
+        const getNotes = async () => {
+            try {
+                const res = await AsyncStorage.getItem(`noted-${userData._id}`);
+                const notes = JSON.parse(res);
+                setNotes(notes);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getNotes();
+    }, [isUpdate]);
+    console.log('noteslist: ', notes);
     return (
         <View style={tw`w-full h-full flex `}>
             <View style={tw`mb-2 flex-row justify-around`}>
@@ -28,7 +47,11 @@ function NotesList() {
 
             <View style={tw`h-4/5`}>
                 <ScrollView style={tw`h-full`}>
-                    <View style={tw`p-3 mb-3 bg-[#A8D7E0] rounded-lg`}>
+                    {notes &&
+                        notes.map((note) => (
+                            <NoteItem data={note} key={note.local_id} />
+                        ))}
+                    {/* <View style={tw`p-3 mb-3 bg-[#A8D7E0] rounded-lg`}>
                         <View style={tw`flex-row items-center`}>
                             <Icon
                                 name="description"
@@ -230,7 +253,7 @@ function NotesList() {
                             <Text>Cook | Ongoing</Text>
                             <Text>05/04/2022</Text>
                         </View>
-                    </View>
+                    </View> */}
                 </ScrollView>
             </View>
         </View>

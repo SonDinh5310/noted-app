@@ -7,7 +7,6 @@ import tw from 'twrnc';
 import { emailRegex } from '../../utils/regex';
 import CustomTextInput from '../../components/CustomTextInput/CustomTextInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import { handleUserStorageCheck } from '../../utils/helpers';
 
 const axios = require('axios');
 
@@ -26,7 +25,7 @@ const SignIn = ({ navigation }) => {
         userToken: state.userToken,
         setUserToken: state.setUserToken,
     }));
-    const { setUserData } = AppStore((state) => ({
+    const { setUserData } = AuthStore((state) => ({
         setUserData: state.setUserData,
     }));
 
@@ -39,10 +38,9 @@ const SignIn = ({ navigation }) => {
             );
             setUserData(result.data);
             setUserToken(result.headers['auth-token']);
-            handleUserStorageCheck(result.data._id);
             reset();
         } catch (error) {
-            console.log(error);
+            console.log('error: ', error);
         } finally {
             setIsLoading(false);
         }

@@ -37,7 +37,7 @@ const SignUp = ({ navigation }) => {
             reset();
             navigation.navigate('Sign In');
         } catch (error) {
-            console.log(error);
+            console.log('error: ', error);
         } finally {
             setIsLoading(false);
         }

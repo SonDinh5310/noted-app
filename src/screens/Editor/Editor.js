@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
+import 'react-native-get-random-values';
 import { Alert, TextInput, Dimensions, View, ScrollView } from 'react-native';
 import CustomFloatingButton from '../../components/CustomFloatingButton/CustomFloatingButton';
 import { useHeaderHeight } from '@react-navigation/elements';
-import { AppStore } from '../../context/zustand';
+import { AuthStore, AppStore } from '../../context/zustand';
 import tw from 'twrnc';
 import { saveNoteToStorage } from '../../utils/helpers';
 import { v4 as uuidv4 } from 'uuid';
 
 const height = Dimensions.get('window').height;
 
-const Editor = ({ navigation, route }) => {
+const Editor = ({ navigation, route, note_id }) => {
     const [title, setTitle] = useState('');
     const [data, setData] = useState('');
 
-    const { userData } = AppStore((state) => ({
+    const { userData } = AuthStore((state) => ({
         userData: state.userData,
+    }));
+    const { setIsUpdate } = AppStore((state) => ({
+        setIsUpdate: state.setIsUpdate,
     }));
     // const { note_id, name, content } = route.params;
     // console.log(route.params);
@@ -37,26 +41,33 @@ const Editor = ({ navigation, route }) => {
             );
         }
 
-        // try {
-        //     if (!note_id) {
-        //         const id = uuidv4();
-        //         saveNoteToStorage(userData._id, id, {
-        //             note_id: id,
-        //             name: title,
-        //             content: data,
-        //         });
-        //         return;
-        //     }
-        //     saveNoteToStorage(userData._id, note_id, {
-        //         note_id: note_id,
-        //         name: title,
-        //         content: data,
-        //     });
-        // } catch (error) {
-        //     console.log(error);
-        // } finally {
-        //     navigation.goBack();
-        // }
+        try {
+            // if (!note_id) {
+            //     const id = uuidv4();
+            //     saveNoteToStorage(userData._id, id, {
+            //         note_id: id,
+            //         name: title,
+            //         content: data,
+            //     });
+            //setIsUpdate()
+            // }
+            // saveNoteToStorage(userData._id, {
+            //     note_id: note_id,
+            //     name: title,
+            //     content: data,
+            // });
+            const id = uuidv4();
+            saveNoteToStorage(userData._id, {
+                local_id: id,
+                name: title,
+                content: data,
+            });
+        } catch (error) {
+            console.log('error: ', error);
+        } finally {
+            // setIsUpdate();
+            navigation.navigate('Notes');
+        }
     };
 
     return (

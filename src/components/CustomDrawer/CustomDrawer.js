@@ -5,6 +5,7 @@ import {
     DrawerItemList,
 } from '@react-navigation/drawer';
 import { AuthStore } from '../../context/zustand';
+import { clearAll } from '../../utils/helpers';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -15,6 +16,7 @@ const CustomDrawer = (props) => {
     }));
     const handleSignOut = () => {
         setUserToken(null);
+        // clearAll();
     };
     return (
         <View style={{ flex: 1 }}>
