@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
     Text,
     ScrollView,
@@ -6,27 +6,21 @@ import {
     TextInput,
     TouchableOpacity,
     Dimensions,
-} from 'react-native';
-import NotesList from '../../components/NotesList/NotesList';
-import CustomFloatingButton from '../../components/CustomFloatingButton/CustomFloatingButton';
-import tw from 'twrnc';
+} from "react-native";
+import NotesList from "../../components/NotesList/NotesList";
+import CustomFloatingButton from "../../components/CustomFloatingButton/CustomFloatingButton";
+import tw from "twrnc";
 
 function Notes({ navigation }) {
-    // const [update, setUpdate] = useState(false);
-
-    // const handleUpdate = () => {
-    //     setUpdate(!update);
-    // };
-
     return (
         <View
             style={tw.style(
-                'flex',
-                'flex-col',
-                'px-5',
-                'pt-3',
-                'bg-white',
-                'h-full'
+                "flex",
+                "flex-col",
+                "px-5",
+                "pt-3",
+                "bg-white",
+                "h-full"
             )}
         >
             <Text style={tw`text-[28px]`}>Hello, Nam! 👋🏻</Text>
@@ -38,7 +32,7 @@ function Notes({ navigation }) {
             <CustomFloatingButton
                 name="note-add"
                 size={33}
-                onPress={() => navigation.navigate('Editor')}
+                onPress={() => navigation.navigate("Editor")}
             />
         </View>
     );

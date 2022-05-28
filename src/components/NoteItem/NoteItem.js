@@ -1,14 +1,14 @@
-import React from 'react';
-import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import tw from 'twrnc';
+import React from "react";
+import { View, ScrollView, Text, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import tw from "twrnc";
 
 function NoteItem({ data, navigation }) {
     const { name, content } = data;
     return (
         <View
             style={tw`p-3 mb-3 bg-[#A8D7E0] rounded-lg`}
-            // onPress={() => navigation.navigate('Editor', { data })}
+            onPress={() => navigation.navigate("Editor", { data })}
         >
             <View style={tw`flex-row items-center`}>
                 <Icon name="description" size={22} color="black"></Icon>
