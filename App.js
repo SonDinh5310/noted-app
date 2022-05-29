@@ -1,13 +1,15 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { AppStore, AuthStore } from './src/context/zustand';
+
 import { ActivityIndicator } from 'react-native';
-import { StatusBar } from 'react-native';
-import { AuthStore, AppStore } from './src/context/zustand';
+import Editor from './src/screens/Editor/Editor';
+import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+import SideMenu from './src/components/SideMenu/SideMenu';
 import SignIn from './src/screens/SignIn/SignIn';
 import SignUp from './src/screens/SignUp/SignUp';
-import SideMenu from './src/components/SideMenu/SideMenu';
-import Editor from './src/screens/Editor/Editor';
+import { StatusBar } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import tw from 'twrnc';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,24 +17,25 @@ export default function App() {
     const { userToken } = AuthStore((state) => ({
         userToken: state.userToken,
     }));
-    // console.log(userToken);
+
     const { isLoading } = AppStore((state) => ({
         isLoading: state.isLoading,
     }));
     return (
         <>
-            {isLoading && (
-                <ActivityIndicator
-                    size="large"
-                    color="#0000ff"
-                    // style={{ marginVertical: 'auto' }}
-                />
-            )}
+            {isLoading ||
+                (!userToken && (
+                    <ActivityIndicator
+                        size="large"
+                        color="#0000ff"
+                        style={tw`my-auto h-full`}
+                    />
+                ))}
             {!isLoading && (
                 <NavigationContainer>
                     <StatusBar animated={true} backgroundColor="black" />
                     <Stack.Navigator>
-                        {userToken !== null && userToken !== undefined ? (
+                        {userToken && userToken !== undefined ? (
                             <>
                                 <Stack.Screen
                                     name="Side Menu"

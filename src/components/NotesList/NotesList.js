@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { View, ScrollView, Text, TouchableOpacity } from "react-native";
-import NoteItem from "../NoteItem/NoteItem";
-import tw from "twrnc";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AuthStore, AppStore } from "../../context/zustand";
-import { getAllNote } from "../../utils/helpers";
+import { AppStore, AuthStore } from '../../context/zustand';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, Text, View } from 'react-native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import NoteItem from '../NoteItem/NoteItem';
+import tw from 'twrnc';
 
 function NotesList() {
     const [notes, setNotes] = useState([]);
@@ -30,7 +29,7 @@ function NotesList() {
         };
         getNotes();
     }, [isUpdate]);
-    console.log("noteslist: ", notes);
+    console.log('noteslist: ', notes);
     return (
         <View style={tw`w-full h-full flex `}>
             {/* <View style={tw`mb-2 flex-row justify-around`}>
@@ -45,12 +44,17 @@ function NotesList() {
                 </TouchableOpacity>
             </View> */}
 
-            <View style={tw`h-4/5`}>
+            <View style={tw`h-5/6`}>
                 <ScrollView style={tw`h-full`}>
                     {notes &&
                         notes.map((note) => (
                             <NoteItem data={note} key={note.local_id} />
                         ))}
+                    {!notes && (
+                        <Text style={tw`w-full text-center text-[16px]`}>
+                            OOps! You don't have any note
+                        </Text>
+                    )}
                 </ScrollView>
             </View>
         </View>

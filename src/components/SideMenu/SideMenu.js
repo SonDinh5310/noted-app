@@ -1,21 +1,14 @@
-import React from 'react';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { AppStore } from '../../context/zustand';
-import { TouchableOpacity, View } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
-import UserProfile from '../../screens/UserProfile/UserProfile';
-import Notes from '../../screens/Notes/Notes';
-import Settings from '../../screens/Settings/Settings';
 import CustomDrawer from '../CustomDrawer/CustomDrawer';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Notes from '../../screens/Notes/Notes';
+import React from 'react';
+import Settings from '../../screens/Settings/Settings';
+import UserProfile from '../../screens/UserProfile/UserProfile';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const Drawer = createDrawerNavigator();
 
 const SideMenu = ({ navigation }) => {
-    // const { toggleEdit, setToggleEdit } = AppStore((state) => ({
-    //     toggleEdit: state.toggleEdit,
-    //     setToggleEdit: state.setToggleEdit,
-    // }));
     return (
         <Drawer.Navigator
             drawerContent={(props) => <CustomDrawer {...props} />}
@@ -62,53 +55,6 @@ const SideMenu = ({ navigation }) => {
                     ),
                 }}
             />
-
-            {/* <Drawer.Screen
-                name="Note"
-                component={NotedApp}
-                options={{
-                    drawerIcon: ({ color }) => (
-                        <MaterialIcons
-                            name="description"
-                            size={22}
-                            color={color}
-                        ></MaterialIcons>
-                    ),
-                    headerRight: ({ color }) => (
-                        <View
-                            style={{
-                                flex: 1,
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                marginRight: 10,
-                            }}
-                        >
-                            <TouchableOpacity onPress={() => setToggleEdit()}>
-                                {toggleEdit ? (
-                                    <MaterialIcons
-                                        name="edit"
-                                        size={22}
-                                        color={color}
-                                    ></MaterialIcons>
-                                ) : (
-                                    <MaterialIcons
-                                        name="play-arrow"
-                                        size={28}
-                                        color={color}
-                                    ></MaterialIcons>
-                                )}
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: 10 }}>
-                                <MaterialIcons
-                                    name="more-vert"
-                                    size={25}
-                                    color={color}
-                                ></MaterialIcons>
-                            </TouchableOpacity>
-                        </View>
-                    ),
-                }}
-            /> */}
         </Drawer.Navigator>
     );
 };

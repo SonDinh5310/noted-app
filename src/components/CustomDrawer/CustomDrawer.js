@@ -1,17 +1,17 @@
-import React from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
 import {
     DrawerContentScrollView,
     DrawerItemList,
 } from '@react-navigation/drawer';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+
 import { AuthStore } from '../../context/zustand';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import React from 'react';
 import { clearAll } from '../../utils/helpers';
 
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 const CustomDrawer = (props) => {
-    const { userToken, setUserToken } = AuthStore((state) => ({
-        userToken: state.userToken,
+    const { userData, setUserToken } = AuthStore((state) => ({
+        userData: state.userData,
         setUserToken: state.setUserToken,
     }));
     const handleSignOut = () => {
@@ -51,7 +51,7 @@ const CustomDrawer = (props) => {
                             marginTop: -10,
                         }}
                     >
-                        ANON
+                        {userData.name}
                     </Text>
                 </View>
                 <View
