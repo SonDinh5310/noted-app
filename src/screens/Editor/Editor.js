@@ -7,16 +7,17 @@ import React, { useState } from 'react';
 import CustomFloatingButton from '../../components/CustomFloatingButton/CustomFloatingButton';
 import { saveNoteToStorage } from '../../utils/helpers';
 import tw from 'twrnc';
-import { useHeaderHeight } from '@react-navigation/elements';
 import { v4 as uuidv4 } from 'uuid';
-
-const height = Dimensions.get('window').height;
 
 const Editor = ({ navigation, route }) => {
     const { type } = route.params;
 
-    const [title, setTitle] = useState(route.params ? name : '');
-    const [data, setData] = useState(route.params ? content : '');
+    const [title, setTitle] = useState(
+        route.params.name ? route.params.name : ''
+    );
+    const [data, setData] = useState(
+        route.params.content ? route.params.content : ''
+    );
 
     const { userData } = AuthStore((state) => ({
         userData: state.userData,
