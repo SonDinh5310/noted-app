@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import NoteItem from '../NoteItem/NoteItem';
 import tw from 'twrnc';
 
-function NotesList() {
+function NotesList({ navigation }) {
     const [notes, setNotes] = useState([]);
 
     const { userData } = AuthStore((state) => ({
@@ -17,15 +17,14 @@ function NotesList() {
         isUpdate: state.isUpdate,
     }));
 
+    // console.log('------------', isUpdate);
+
     useEffect(() => {
         const getNotes = async () => {
-            try {
-                const res = await AsyncStorage.getItem(`noted-${userData._id}`);
-                const notes = JSON.parse(res);
-                setNotes(notes);
-            } catch (error) {
-                console.log(error);
-            }
+            console.log('getting notes');
+            const res = await AsyncStorage.getItem(`noted-${userData._id}`);
+            const notes = JSON.parse(res);
+            setNotes(notes);
         };
         getNotes();
     }, [isUpdate]);
@@ -48,7 +47,11 @@ function NotesList() {
                 <ScrollView style={tw`h-full`}>
                     {notes &&
                         notes.map((note) => (
-                            <NoteItem data={note} key={note.local_id} />
+                            <NoteItem
+                                data={note}
+                                key={note.local_id}
+                                navigation={navigation}
+                            />
                         ))}
                     {!notes && (
                         <Text style={tw`w-full text-center text-[16px]`}>

@@ -3,21 +3,17 @@ import 'react-native-get-random-values';
 import { Alert, Dimensions, ScrollView, TextInput, View } from 'react-native';
 import { AppStore, AuthStore } from '../../context/zustand';
 import React, { useState } from 'react';
+import { saveNoteToStorage, updateNoteToStorage } from '../../utils/helpers';
 
 import CustomFloatingButton from '../../components/CustomFloatingButton/CustomFloatingButton';
-import { saveNoteToStorage } from '../../utils/helpers';
 import tw from 'twrnc';
 import { v4 as uuidv4 } from 'uuid';
 
 const Editor = ({ navigation, route }) => {
-    const { type } = route.params;
+    const { type, data: noteData } = route.params;
 
-    const [title, setTitle] = useState(
-        route.params.name ? route.params.name : ''
-    );
-    const [data, setData] = useState(
-        route.params.content ? route.params.content : ''
-    );
+    const [title, setTitle] = useState(noteData ? noteData.name : '');
+    const [data, setData] = useState(noteData ? noteData.content : '');
 
     const { userData } = AuthStore((state) => ({
         userData: state.userData,
@@ -47,16 +43,17 @@ const Editor = ({ navigation, route }) => {
 
         try {
             if (type === 'modify') {
-                return saveNoteToStorage(userData._id, {
-                    local_id: local_id,
+                await updateNoteToStorage(userData._id, noteData.local_id, {
+                    local_id: noteData.local_id,
                     name: title,
                     content: data,
                     lastUpdated: new Date(),
+                    createdAt: noteData.createdAt,
                 });
             }
             if (type === 'create') {
                 const id = uuidv4();
-                return saveNoteToStorage(userData._id, {
+                await saveNoteToStorage(userData._id, {
                     local_id: id,
                     name: title,
                     content: data,
@@ -68,7 +65,7 @@ const Editor = ({ navigation, route }) => {
             console.log('error: ', error);
         } finally {
             setIsUpdate();
-            navigation.navigate('Notes');
+            navigation.goBack();
         }
     };
 

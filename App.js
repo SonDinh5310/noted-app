@@ -23,14 +23,13 @@ export default function App() {
     }));
     return (
         <>
-            {isLoading ||
-                (!userToken && (
-                    <ActivityIndicator
-                        size="large"
-                        color="#0000ff"
-                        style={tw`my-auto h-full`}
-                    />
-                ))}
+            {isLoading && (
+                <ActivityIndicator
+                    size="large"
+                    color="#0000ff"
+                    style={tw`my-auto h-full`}
+                />
+            )}
             {!isLoading && (
                 <NavigationContainer>
                     <StatusBar animated={true} backgroundColor="black" />

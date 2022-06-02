@@ -1,29 +1,35 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// export const handleUserStorageCheck = async (user_id) => {
-//     try {
-//         const userStorage = await AsyncStorage.getItem(`noted-${user_id}`);
-//         if (!userStorage) {
-//             await AsyncStorage.setItem(`noted-${user_id}`, JSON.stringify({}));
-//             console.log('create new storage');
-//         }
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
+export const removeNoteFromStorage = async (user_id, local_id) => {
+    console.log('local_id:', local_id);
+    try {
+        const userStorage = await AsyncStorage.getItem(`noted-${user_id}`);
+        if (userStorage && local_id) {
+            const temp = JSON.parse(userStorage);
+            const newData = temp.filter((note) => note.local_id !== local_id);
+            console.log('newData:', newData);
+            await AsyncStorage.setItem(
+                `noted-${user_id}`,
+                JSON.stringify(newData)
+            );
+        }
+        return;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
-// export const getAllNote = async (user_id) => {
-//     try {
-//         const res = await AsyncStorage.getItem(`noted-${user_id}`);
-//         // setData();
-//         // const notes = await JSON.parse(res);
-//         // console.log('notes: ', notes);
-//         return JSON.parse(res);
-//         // return data;
-//     } catch (error) {
-//         console.log('error: ', error);
-//     }
-// };
+export const updateNoteToStorage = async (user_id, local_id, data) => {
+    try {
+        const userStorage = await AsyncStorage.getItem(`noted-${user_id}`);
+        if (userStorage) {
+            await removeNoteFromStorage(user_id, local_id);
+            await saveNoteToStorage(user_id, data);
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+};
 
 export const saveNoteToStorage = async (user_id, data) => {
     try {
