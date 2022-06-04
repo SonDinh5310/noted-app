@@ -1,10 +1,8 @@
 import 'react-native-get-random-values';
-
-import { Alert, Dimensions, ScrollView, TextInput, View } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { Alert, ScrollView, TextInput, View } from 'react-native';
 import { AppStore, AuthStore } from '../../context/zustand';
-import React, { useState } from 'react';
 import { saveNoteToStorage, updateNoteToStorage } from '../../utils/helpers';
-
 import CustomFloatingButton from '../../components/CustomFloatingButton/CustomFloatingButton';
 import tw from 'twrnc';
 import { v4 as uuidv4 } from 'uuid';
@@ -22,8 +20,12 @@ const Editor = ({ navigation, route }) => {
         setIsUpdate: state.setIsUpdate,
     }));
 
-    const handleChange = (value, state) => {
-        return state === 'title' ? setTitle(value) : setData(value);
+    const handleChangeTitle = (value) => {
+        return setTitle(value);
+    };
+
+    const handleChangeData = (value) => {
+        return setData(value);
     };
 
     const handleSave = async () => {
@@ -76,7 +78,7 @@ const Editor = ({ navigation, route }) => {
                     placeholder="Give your note a title"
                     style={tw`text-[20px] mb-2 py-2 bg-white font-bold border-b-2 border-b-slate-200`}
                     value={title}
-                    onChangeText={(text) => handleChange(text, 'title')}
+                    onChangeText={(text) => handleChangeTitle(text, 'title')}
                 />
                 <TextInput
                     multiline={true}
@@ -85,7 +87,7 @@ const Editor = ({ navigation, route }) => {
                         textAlignVertical: 'top',
                     })}
                     value={data}
-                    onChangeText={(text) => handleChange(text, 'data')}
+                    onChangeText={(text) => handleChangeData(text, 'data')}
                 ></TextInput>
             </ScrollView>
             <CustomFloatingButton
