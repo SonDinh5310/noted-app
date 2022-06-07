@@ -9,7 +9,8 @@ import tw from 'twrnc';
 const moment = require('moment');
 
 function NoteItem({ data, navigation }) {
-    const { local_id, name, content, lastUpdated } = data;
+    const { local_id, name, content, lastUpdated, status, tags } = data;
+    console.log(tags);
 
     const { userData } = AuthStore((state) => ({
         userData: state.userData,
@@ -41,15 +42,29 @@ function NoteItem({ data, navigation }) {
                     <Text style={tw`ml-1 text-[20px] font-bold`}>{name}</Text>
                 </View>
                 <TouchableOpacity onPress={() => handleDeleteNote()}>
-                    <Icon name="delete" size={28} color="black"></Icon>
+                    <Icon name="delete" size={28} color="tomato"></Icon>
                 </TouchableOpacity>
             </View>
-            <Text style={tw`text-[17px] py-1`} numberOfLines={3}>
+            <Text style={tw`text-[17px] py-1 font-semibold`} numberOfLines={3}>
                 {content}
             </Text>
             <View style={tw`flex-row justify-between text-slate-400`}>
-                <Text>Cook | Ongoing</Text>
-                <Text>{moment(lastUpdated).format('LLL')}</Text>
+                <Text style={tw`capitalize text-[16px] font-bold`}>
+                    {status}
+                </Text>
+                <Text style={tw`text-[15px] font-bold`}>
+                    {moment(lastUpdated).format('LLL')}
+                </Text>
+            </View>
+            <View style={tw`flex flex-row mt-2`}>
+                {tags.map((tag, index) => (
+                    <Text
+                        key={index}
+                        style={tw`border-2 pl-3 pr-2 py-0.5 rounded-xl text-[15px] mr-1 text-white bg-[#384D95] font-bold`}
+                    >
+                        {tag}
+                    </Text>
+                ))}
             </View>
         </TouchableOpacity>
     );
