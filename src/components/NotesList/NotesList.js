@@ -6,8 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import NoteItem from '../NoteItem/NoteItem';
 import tw from 'twrnc';
 
-function NotesList({ navigation }) {
-    const [notes, setNotes] = useState([]);
+function NotesList({ navigation, notes }) {
+    // const [notes, setNotes] = useState([]);
 
     const { userData } = AuthStore((state) => ({
         userData: state.userData,
@@ -19,16 +19,16 @@ function NotesList({ navigation }) {
 
     // console.log('------------', isUpdate);
 
-    useEffect(() => {
-        const getNotes = async () => {
-            console.log('getting notes');
-            const res = await AsyncStorage.getItem(`noted-${userData._id}`);
-            const notes = JSON.parse(res);
-            setNotes(notes);
-        };
-        getNotes();
-    }, [isUpdate]);
-    console.log('noteslist: ', notes);
+    // useEffect(() => {
+    //     const getNotes = async () => {
+    //         // console.log('getting notes');
+    //         const res = await AsyncStorage.getItem(`noted-${userData._id}`);
+    //         const notes = JSON.parse(res);
+    //         setNotes(notes);
+    //     };
+    //     getNotes();
+    // }, [isUpdate]);
+    // console.log('noteslist: ', notes);
     return (
         <View style={tw`w-full h-full flex `}>
             {/* <View style={tw`mb-2 flex-row justify-around`}>

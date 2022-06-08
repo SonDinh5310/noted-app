@@ -10,7 +10,6 @@ const moment = require('moment');
 
 function NoteItem({ data, navigation }) {
     const { local_id, name, content, lastUpdated, status, tags } = data;
-    console.log(tags);
 
     const { userData } = AuthStore((state) => ({
         userData: state.userData,
