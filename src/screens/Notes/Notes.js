@@ -1,6 +1,12 @@
 import { AppStore, AuthStore } from '../../context/zustand';
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, View, TouchableOpacity } from 'react-native';
+import {
+    Text,
+    TextInput,
+    View,
+    TouchableOpacity,
+    Keyboard,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CustomFloatingButton from '../../components/CustomFloatingButton/CustomFloatingButton';
@@ -32,10 +38,12 @@ function Notes({ navigation }) {
         );
 
         setSearchResult(filteredNotes);
+        Keyboard.dismiss();
     };
     const handleResetSearch = () => {
         setSearchResult(null);
         setSearchText('');
+        Keyboard.dismiss();
     };
     useEffect(() => {
         const getNotes = async () => {
@@ -82,16 +90,17 @@ function Notes({ navigation }) {
                         </TouchableOpacity>
                     ) : null}
                 </View>
-                <View style={tw`px-3.5 py-4 bg-neutral-100 rounded-xl`}>
-                    <TouchableOpacity>
-                        <Icon
-                            name="search"
-                            size={25}
-                            color="black"
-                            onPress={() => handleSearch(searchText)}
-                        />
-                    </TouchableOpacity>
-                </View>
+
+                <TouchableOpacity
+                    style={tw`px-3.5 py-4 bg-neutral-100 rounded-xl`}
+                >
+                    <Icon
+                        name="search"
+                        size={25}
+                        color="black"
+                        onPress={() => handleSearch(searchText)}
+                    />
+                </TouchableOpacity>
             </View>
             {/* {searchResult && (
                 <NotesList navigation={navigation} notes={notes}></NotesList>
