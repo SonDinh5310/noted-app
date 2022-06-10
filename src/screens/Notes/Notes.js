@@ -34,7 +34,7 @@ function Notes({ navigation }) {
         const notes = JSON.parse(userStorage);
         // console.log(notes);
         const filteredNotes = notes.filter((note) =>
-            note.name.toLowerCase().includes(searchText.toLowerCase())
+            note.name.toLowerCase().includes(text.toLowerCase())
         );
 
         setSearchResult(filteredNotes);
