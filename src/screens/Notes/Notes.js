@@ -14,7 +14,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import NotesList from '../../components/NotesList/NotesList';
 import tw from 'twrnc';
 
-function Notes({ navigation }) {
+function Notes({ navigation, route }) {
+    const { type } = route.params;
     const [notes, setNotes] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [searchResult, setSearchResult] = useState(null);
@@ -45,14 +46,25 @@ function Notes({ navigation }) {
         setSearchText('');
         Keyboard.dismiss();
     };
+
     useEffect(() => {
         const getNotes = async () => {
-            // console.log('getting notes');
             const res = await AsyncStorage.getItem(`noted-${userData._id}`);
             const notes = JSON.parse(res);
             setNotes(notes);
         };
-        getNotes();
+        const getDeletedNotes = async () => {
+            const res = await AsyncStorage.getItem(`noted-bin-${userData._id}`);
+            const deletedNotes = JSON.parse(res);
+            setNotes(deletedNotes);
+        };
+
+        if (type === 'note') {
+            return getNotes();
+        }
+        if (type === 'deleted_note') {
+            return getDeletedNotes();
+        }
     }, [isUpdate]);
     return (
         <View
@@ -60,12 +72,14 @@ function Notes({ navigation }) {
                 'flex',
                 'flex-col',
                 'px-5',
-                'pt-3',
+                'py-3',
                 'bg-white',
                 'h-full'
             )}
         >
-            <Text style={tw`text-[28px]`}>Hello, {userData.name}! 👋🏻</Text>
+            {type === 'note' && (
+                <Text style={tw`text-[28px]`}>Hello, {userData.name}! 👋🏻</Text>
+            )}
             <View
                 style={tw`w-full flex flex-row justify-between items-center my-2.5`}
             >
@@ -102,20 +116,21 @@ function Notes({ navigation }) {
                     />
                 </TouchableOpacity>
             </View>
-            {/* {searchResult && (
-                <NotesList navigation={navigation} notes={notes}></NotesList>
-            )} */}
+
             <NotesList
                 navigation={navigation}
                 notes={searchResult ? searchResult : notes}
+                type={type}
             ></NotesList>
-            <CustomFloatingButton
-                name="note-add"
-                size={33}
-                onPress={() =>
-                    navigation.navigate('Editor', { type: 'create' })
-                }
-            />
+            {type === 'note' && (
+                <CustomFloatingButton
+                    name="note-add"
+                    size={33}
+                    onPress={() =>
+                        navigation.navigate('Editor', { type: 'create' })
+                    }
+                />
+            )}
         </View>
     );
 }

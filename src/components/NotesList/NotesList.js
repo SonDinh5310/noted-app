@@ -6,9 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import NoteItem from '../NoteItem/NoteItem';
 import tw from 'twrnc';
 
-function NotesList({ navigation, notes }) {
-    // const [notes, setNotes] = useState([]);
-
+function NotesList({ navigation, notes, type }) {
+    console.log('notes:', notes);
     const { userData } = AuthStore((state) => ({
         userData: state.userData,
     }));
@@ -16,19 +15,6 @@ function NotesList({ navigation, notes }) {
     const { isUpdate } = AppStore((state) => ({
         isUpdate: state.isUpdate,
     }));
-
-    // console.log('------------', isUpdate);
-
-    // useEffect(() => {
-    //     const getNotes = async () => {
-    //         // console.log('getting notes');
-    //         const res = await AsyncStorage.getItem(`noted-${userData._id}`);
-    //         const notes = JSON.parse(res);
-    //         setNotes(notes);
-    //     };
-    //     getNotes();
-    // }, [isUpdate]);
-    // console.log('noteslist: ', notes);
     return (
         <View style={tw`w-full h-full flex `}>
             {/* <View style={tw`mb-2 flex-row justify-around`}>
@@ -51,13 +37,20 @@ function NotesList({ navigation, notes }) {
                                 data={note}
                                 key={note.local_id}
                                 navigation={navigation}
+                                type={type}
                             />
                         ))}
-                    {!notes && (
+                    {type === 'note' && (!notes || notes.length === 0) && (
                         <Text style={tw`w-full text-center text-[16px]`}>
-                            OOps! You don't have any note
+                            OOps! You don't have any note.
                         </Text>
                     )}
+                    {type === 'deleted_note' &&
+                        (!notes || notes.length === 0) && (
+                            <Text style={tw`w-full text-center text-[16px]`}>
+                                OOps! Recycle Bin empty.
+                            </Text>
+                        )}
                 </ScrollView>
             </View>
         </View>

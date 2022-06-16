@@ -68,15 +68,19 @@ const Editor = ({ navigation, route }) => {
             }
             if (type === 'create') {
                 const id = uuidv4();
-                await saveNoteToStorage(userData._id, {
-                    local_id: id,
-                    name: title,
-                    status: status,
-                    tags: tags.tagsArray,
-                    content: data,
-                    lastUpdated: new Date(),
-                    createdAt: new Date(),
-                });
+                await saveNoteToStorage(
+                    userData._id,
+                    {
+                        local_id: id,
+                        name: title,
+                        status: status,
+                        tags: tags.tagsArray,
+                        content: data,
+                        lastUpdated: new Date(),
+                        createdAt: new Date(),
+                    },
+                    'noted'
+                );
             }
         } catch (error) {
             console.log('error: ', error);

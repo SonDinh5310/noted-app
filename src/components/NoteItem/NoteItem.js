@@ -3,12 +3,12 @@ import { Text, TouchableOpacity, View } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import React from 'react';
-import { removeNoteFromStorage } from '../../utils/helpers';
+import { removeNoteFromStorage, restoreNote } from '../../utils/helpers';
 import tw from 'twrnc';
 
 const moment = require('moment');
 
-function NoteItem({ data, navigation }) {
+function NoteItem({ data, navigation, type }) {
     const { local_id, name, content, lastUpdated, status, tags } = data;
 
     const { userData } = AuthStore((state) => ({
@@ -28,10 +28,25 @@ function NoteItem({ data, navigation }) {
             setIsUpdate();
         }
     };
+    const handleRestoreNote = async () => {
+        try {
+            await restoreNote(userData._id, local_id);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsUpdate();
+        }
+    };
     return (
         <TouchableOpacity
-            onPress={() =>
-                navigation.navigate('Editor', { data, type: 'modify' })
+            onPress={
+                navigation
+                    ? () =>
+                          navigation.navigate('Editor', {
+                              data,
+                              type: 'modify',
+                          })
+                    : null
             }
             style={tw`p-3 mb-3 bg-[#A8D7E0] rounded-lg`}
         >
@@ -40,9 +55,20 @@ function NoteItem({ data, navigation }) {
                     <Icon name="description" size={28} color="black"></Icon>
                     <Text style={tw`ml-1 text-[20px] font-bold`}>{name}</Text>
                 </View>
-                <TouchableOpacity onPress={() => handleDeleteNote()}>
-                    <Icon name="delete" size={28} color="tomato"></Icon>
-                </TouchableOpacity>
+                {type === 'note' && (
+                    <TouchableOpacity onPress={() => handleDeleteNote()}>
+                        <Icon name="delete" size={28} color="tomato"></Icon>
+                    </TouchableOpacity>
+                )}
+                {type === 'deleted_note' && (
+                    <TouchableOpacity onPress={() => handleRestoreNote()}>
+                        <Icon
+                            name="restore-from-trash"
+                            size={28}
+                            color="green"
+                        ></Icon>
+                    </TouchableOpacity>
+                )}
             </View>
             <Text style={tw`text-[17px] py-1 font-semibold`} numberOfLines={3}>
                 {content}
@@ -56,7 +82,7 @@ function NoteItem({ data, navigation }) {
                 </Text>
             </View>
             <View style={tw`flex flex-row mt-2`}>
-                {tags.map((tag, index) => (
+                {tags?.map((tag, index) => (
                     <Text
                         key={index}
                         style={tw`border-2 pl-3 pr-2 py-0.5 rounded-xl text-[15px] mr-1 text-white bg-[#384D95] font-bold`}

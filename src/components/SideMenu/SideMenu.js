@@ -18,6 +18,7 @@ const SideMenu = ({ navigation }) => {
         >
             <Drawer.Screen
                 name="Notes"
+                initialParams={{ type: 'note' }}
                 component={Notes}
                 options={{
                     drawerIcon: ({ color }) => (
@@ -36,6 +37,20 @@ const SideMenu = ({ navigation }) => {
                     drawerIcon: ({ color }) => (
                         <MaterialIcons
                             name="person"
+                            size={22}
+                            color={color}
+                        ></MaterialIcons>
+                    ),
+                }}
+            />
+            <Drawer.Screen
+                name="Recycle Bin"
+                initialParams={{ type: 'deleted_note' }}
+                component={Notes}
+                options={{
+                    drawerIcon: ({ color }) => (
+                        <MaterialIcons
+                            name="delete"
                             size={22}
                             color={color}
                         ></MaterialIcons>
