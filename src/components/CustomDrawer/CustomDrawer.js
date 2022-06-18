@@ -1,13 +1,13 @@
 import {
     DrawerContentScrollView,
     DrawerItemList,
-} from '@react-navigation/drawer';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+} from "@react-navigation/drawer";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
-import { AuthStore } from '../../context/zustand';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import React from 'react';
-import { clearAll } from '../../utils/helpers';
+import { AuthStore } from "../../context/zustand";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import React from "react";
+import { clearAll } from "../../utils/helpers";
 
 const CustomDrawer = (props) => {
     const { userData, setUserToken } = AuthStore((state) => ({
@@ -22,19 +22,19 @@ const CustomDrawer = (props) => {
         <View style={{ flex: 1 }}>
             <DrawerContentScrollView
                 {...props}
-                contentContainerStyle={{ backgroundColor: 'lightblue' }}
+                contentContainerStyle={{ backgroundColor: "lightblue" }}
             >
                 <View
                     style={{
                         flex: 1,
-                        flexDirection: 'row',
-                        alignItems: 'center',
+                        flexDirection: "row",
+                        alignItems: "center",
                         padding: 10,
                     }}
                 >
                     <Image
                         source={{
-                            uri: 'https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png',
+                            uri: "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
                         }}
                         style={{
                             height: 50,
@@ -45,7 +45,7 @@ const CustomDrawer = (props) => {
                     />
                     <Text
                         style={{
-                            color: '#fff',
+                            color: "#fff",
                             fontSize: 18,
                             marginLeft: 15,
                             marginTop: -10,
@@ -55,7 +55,7 @@ const CustomDrawer = (props) => {
                     </Text>
                 </View>
                 <View
-                    style={{ flex: 1, backgroundColor: '#fff', paddingTop: 10 }}
+                    style={{ flex: 1, backgroundColor: "#fff", paddingTop: 10 }}
                 >
                     <DrawerItemList {...props} />
                 </View>
@@ -65,7 +65,7 @@ const CustomDrawer = (props) => {
                     paddingVertical: 10,
                     paddingHorizontal: 20,
                     borderTopWidth: 1,
-                    borderTopColor: '#ccc',
+                    borderTopColor: "#ccc",
                 }}
             >
                 <TouchableOpacity
@@ -73,7 +73,7 @@ const CustomDrawer = (props) => {
                     onPress={() => handleSignOut()}
                 >
                     <View
-                        style={{ flexDirection: 'row', alignItems: 'center' }}
+                        style={{ flexDirection: "row", alignItems: "center" }}
                     >
                         <MaterialIcons
                             name="logout"
