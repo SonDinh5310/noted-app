@@ -1,12 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as MediaLibrary from 'expo-media-library';
+import * as FileSystem from 'expo-file-system';
 
-export const removeNoteFromStorage = async (user_id, local_id) => {
+export const removeNoteFromStorage = async (user_id, local_id, storage) => {
     // console.log('local_id:', local_id);
     try {
-        const userStorage = await AsyncStorage.getItem(`noted-${user_id}`);
+        const userStorage = await AsyncStorage.getItem(`${storage}-${user_id}`);
         if (userStorage && local_id) {
             const temp = JSON.parse(userStorage);
-            // const newData = temp.filter((note) => note.local_id !== local_id);
             let newData = [],
                 tobeDeleteNote;
             temp.map((note) => {
@@ -16,17 +17,14 @@ export const removeNoteFromStorage = async (user_id, local_id) => {
                 }
                 return newData.push(note);
             });
-            // console.log('newData:', newData);
-            // await AsyncStorage.setItem(
-            //     `noted-bin-${user_id}`,
-            //     JSON.stringify(tobeDeleteNote)
-            // );
-            await saveNoteToStorage(user_id, tobeDeleteNote, 'noted-bin');
+
+            if (storage === 'noted') {
+                await saveNoteToStorage(user_id, tobeDeleteNote, 'noted-bin');
+            }
             await AsyncStorage.setItem(
-                `noted-${user_id}`,
+                `${storage}-${user_id}`,
                 JSON.stringify(newData)
             );
-            // await saveNoteToStorage(user_id, newData, 'noted');
         }
         return;
     } catch (error) {
@@ -47,7 +45,7 @@ export const restoreNote = async (user_id, local_id) => {
                     return;
                 }
             });
-            console.log('temp:', temp);
+            // console.log('temp:', temp);
             await saveNoteToStorage(user_id, toBeRestoreNote, 'noted');
             await AsyncStorage.setItem(
                 `noted-bin-${user_id}`,
@@ -68,7 +66,7 @@ export const updateNoteToStorage = async (user_id, local_id, data) => {
     try {
         const userStorage = await AsyncStorage.getItem(`noted-${user_id}`);
         if (userStorage) {
-            await removeNoteFromStorage(user_id, local_id);
+            await removeNoteFromStorage(user_id, local_id, 'noted');
             await saveNoteToStorage(user_id, data, 'noted');
         }
     } catch (error) {
@@ -105,4 +103,21 @@ export const clearAll = async () => {
     }
 
     console.log('...Done.');
+};
+
+export const exportFile = async (noteName, fileContent, fileType) => {
+    const [status, requestPermission] = MediaLibrary.usePermissions();
+    // if (status.accessPrivileges === 'none') {
+    //     console.log(await requestPermission());
+    //     // await requestPermission();
+    // }
+    if (status.accessPrivileges === 'all') {
+        const fileUri =
+            FileSystem.documentDirectory + `${noteName}.${fileType}`;
+        await FileSystem.writeAsStringAsync(fileUri, fileContent, {
+            encoding: 'utf8',
+        });
+        const asset = await MediaLibrary.createAssetAsync(fileUri);
+        await MediaLibrary.createAlbumAsync('Noted Exports', asset, false);
+    }
 };

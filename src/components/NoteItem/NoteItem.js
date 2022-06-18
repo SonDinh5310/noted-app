@@ -1,9 +1,13 @@
 import { AppStore, AuthStore } from '../../context/zustand';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, Alert } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import React from 'react';
-import { removeNoteFromStorage, restoreNote } from '../../utils/helpers';
+import {
+    removeNoteFromStorage,
+    restoreNote,
+    exportFile,
+} from '../../utils/helpers';
 import tw from 'twrnc';
 
 const moment = require('moment');
@@ -19,9 +23,21 @@ function NoteItem({ data, navigation, type }) {
         setIsUpdate: state.setIsUpdate,
     }));
 
-    const handleDeleteNote = async () => {
+    const handleDeleteNote = async (storage) => {
         try {
-            await removeNoteFromStorage(userData._id, local_id);
+            // Alert.alert(
+            //     'User Confirm',
+            //     `This will delete the note from ${
+            //         storage === 'noted' ? 'note list' : 'recycle bin'
+            //     }`,
+            //     [
+            //         { text: 'Cancel' },
+            //         {
+            //             text: 'Confirm',
+            //         },
+            //     ]
+            // );
+            await removeNoteFromStorage(userData._id, local_id, storage);
         } catch (error) {
             console.log(error);
         } finally {
@@ -35,6 +51,13 @@ function NoteItem({ data, navigation, type }) {
             console.log(error);
         } finally {
             setIsUpdate();
+        }
+    };
+    const handleExportNote = async () => {
+        try {
+            await exportFile(name, content, 'txt');
+        } catch (error) {
+            console.log(error);
         }
     };
     return (
@@ -56,18 +79,42 @@ function NoteItem({ data, navigation, type }) {
                     <Text style={tw`ml-1 text-[20px] font-bold`}>{name}</Text>
                 </View>
                 {type === 'note' && (
-                    <TouchableOpacity onPress={() => handleDeleteNote()}>
-                        <Icon name="delete" size={28} color="tomato"></Icon>
-                    </TouchableOpacity>
+                    <View style={tw`flex-row`}>
+                        <TouchableOpacity
+                            style={tw`mr-3`}
+                            onPress={() => handleExportNote()}
+                        >
+                            <Icon
+                                name="file-upload"
+                                size={28}
+                                color="blue"
+                            ></Icon>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => handleDeleteNote('noted')}
+                        >
+                            <Icon name="delete" size={28} color="tomato"></Icon>
+                        </TouchableOpacity>
+                    </View>
                 )}
                 {type === 'deleted_note' && (
-                    <TouchableOpacity onPress={() => handleRestoreNote()}>
-                        <Icon
-                            name="restore-from-trash"
-                            size={28}
-                            color="green"
-                        ></Icon>
-                    </TouchableOpacity>
+                    <View style={tw`flex-row`}>
+                        <TouchableOpacity
+                            style={tw`mr-3`}
+                            onPress={() => handleRestoreNote()}
+                        >
+                            <Icon
+                                name="restore-from-trash"
+                                size={28}
+                                color="green"
+                            ></Icon>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => handleDeleteNote('noted-bin')}
+                        >
+                            <Icon name="delete" size={28} color="tomato"></Icon>
+                        </TouchableOpacity>
+                    </View>
                 )}
             </View>
             <Text style={tw`text-[17px] py-1 font-semibold`} numberOfLines={3}>

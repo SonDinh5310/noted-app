@@ -16,7 +16,7 @@ const CustomDrawer = (props) => {
     }));
     const handleSignOut = () => {
         setUserToken(null);
-        clearAll();
+        // clearAll();
     };
     return (
         <View style={{ flex: 1 }}>

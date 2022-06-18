@@ -19,7 +19,8 @@ function Notes({ navigation, route }) {
     const [notes, setNotes] = useState([]);
     const [searchText, setSearchText] = useState('');
     const [searchResult, setSearchResult] = useState(null);
-
+    // console.log('type:', type);
+    // console.log('notes:', notes);
     const { userData } = AuthStore((state) => ({
         userData: state.userData,
     }));

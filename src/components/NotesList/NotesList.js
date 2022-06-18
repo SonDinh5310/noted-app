@@ -7,14 +7,14 @@ import NoteItem from '../NoteItem/NoteItem';
 import tw from 'twrnc';
 
 function NotesList({ navigation, notes, type }) {
-    console.log('notes:', notes);
-    const { userData } = AuthStore((state) => ({
-        userData: state.userData,
-    }));
+    // console.log('notes:', notes);
+    // const { userData } = AuthStore((state) => ({
+    //     userData: state.userData,
+    // }));
 
-    const { isUpdate } = AppStore((state) => ({
-        isUpdate: state.isUpdate,
-    }));
+    // const { isUpdate } = AppStore((state) => ({
+    //     isUpdate: state.isUpdate,
+    // }));
     return (
         <View style={tw`w-full h-full flex `}>
             {/* <View style={tw`mb-2 flex-row justify-around`}>
