@@ -3,17 +3,31 @@ import {
     DrawerItemList,
 } from "@react-navigation/drawer";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-
+import Icon from "react-native-vector-icons/MaterialIcons";
 import { AuthStore } from "../../context/zustand";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { clearAll } from "../../utils/helpers";
+import DocumentPicker, { types } from "react-native-document-picker";
 
 const CustomDrawer = (props) => {
+    const [pickerResponse, setPickerResponse] = useState([]);
     const { userData, setUserToken } = AuthStore((state) => ({
         userData: state.userData,
         setUserToken: state.setUserToken,
     }));
+
+    const handleDocumentSelection = useCallback(async () => {
+        try {
+            const response = await DocumentPicker.pickSingle({
+                presentationStyle: "fullScreen",
+                type: [types.plainText, types.pdf, types.doc, types.docx],
+            });
+            setPickerResponse(response);
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
     const handleSignOut = () => {
         setUserToken(null);
         // clearAll();
