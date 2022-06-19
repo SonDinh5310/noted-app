@@ -2,6 +2,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
+import DocumentPicker, {
+    DirectoryPickerResponse,
+    DocumentPickerResponse,
+    isInProgress,
+    types,
+} from 'react-native-document-picker';
 
 export const removeNoteFromStorage = async (user_id, local_id, storage) => {
     // console.log('local_id:', local_id);
@@ -156,3 +162,5 @@ export const exportFile = async (noteName, fileContent, fileType) => {
         }
     }
 };
+
+export const importFile = () => {};
