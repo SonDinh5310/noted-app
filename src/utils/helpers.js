@@ -1,6 +1,7 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as MediaLibrary from "expo-media-library";
-import * as FileSystem from "expo-file-system";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as MediaLibrary from 'expo-media-library';
+import * as FileSystem from 'expo-file-system';
+import * as Permissions from 'expo-permissions';
 
 export const removeNoteFromStorage = async (user_id, local_id, storage) => {
     // console.log('local_id:', local_id);
@@ -18,8 +19,8 @@ export const removeNoteFromStorage = async (user_id, local_id, storage) => {
                 return newData.push(note);
             });
 
-            if (storage === "noted") {
-                await saveNoteToStorage(user_id, tobeDeleteNote, "noted-bin");
+            if (storage === 'noted') {
+                await saveNoteToStorage(user_id, tobeDeleteNote, 'noted-bin');
             }
             await AsyncStorage.setItem(
                 `${storage}-${user_id}`,
@@ -28,7 +29,7 @@ export const removeNoteFromStorage = async (user_id, local_id, storage) => {
         }
         return;
     } catch (error) {
-        console.log("error: ", error);
+        console.log('error: ', error);
     }
 };
 
@@ -46,7 +47,7 @@ export const restoreNote = async (user_id, local_id) => {
                 }
             });
             // console.log('temp:', temp);
-            await saveNoteToStorage(user_id, toBeRestoreNote, "noted");
+            await saveNoteToStorage(user_id, toBeRestoreNote, 'noted');
             await AsyncStorage.setItem(
                 `noted-bin-${user_id}`,
                 JSON.stringify(temp)
@@ -58,7 +59,7 @@ export const restoreNote = async (user_id, local_id) => {
             // );
         }
     } catch (error) {
-        console.log("error: ", error);
+        console.log('error: ', error);
     }
 };
 
@@ -80,7 +81,7 @@ export const updateNoteToStorage = async (user_id, local_id, data) => {
             );
         }
     } catch (error) {
-        console.log("error: ", error);
+        console.log('error: ', error);
     }
 };
 
@@ -101,7 +102,7 @@ export const saveNoteToStorage = async (user_id, data, storage) => {
             JSON.stringify([data])
         );
     } catch (error) {
-        console.log("error: ", error);
+        console.log('error: ', error);
     }
 };
 
@@ -109,34 +110,47 @@ export const clearAll = async () => {
     try {
         await AsyncStorage.clear();
     } catch (error) {
-        console.log("error: ", error);
+        console.log('error: ', error);
     }
 
-    console.log("...Done.");
+    console.log('...Done.');
 };
 
 export const exportFile = async (noteName, fileContent, fileType) => {
-    // const request = await MediaLibrary.getPermissionsAsync();
-    // console.group(request);
-    const accessPermission = await MediaLibrary.requestPermissionsAsync();
-    console.log(accessPermission);
-    //    if (!request.status) {
-    //         accessPermission = await MediaLibrary.requestPermissionsAsync();
-    //         console.log("accessPeermission:", accessPermission);
-    //     }
-    if (accessPermission.status === "granted") {
+    const accessPermission = await Permissions.askAsync(
+        Permissions.MEDIA_LIBRARY
+    );
+
+    if (accessPermission.status === 'granted') {
         try {
-            const fileUri = `${FileSystem.documentDirectory}${noteName.replace(
+            const folderUri = FileSystem.documentDirectory + 'Noted/';
+            await FileSystem.makeDirectoryAsync(folderUri, {
+                intermediates: true,
+            });
+            // console.log('folderUri:', folderUri);
+            const fileUri = `${folderUri}${noteName.replace(
                 /\s+/g,
-                "-"
+                '-'
             )}.${fileType}`;
-            console.log("fileUri:", fileUri);
-            // await FileSystem.writeAsStringAsync(fileUri, fileContent, {
-            //     encoding: FileSystem.EncodingType.UTF8,
-            // });
+            // console.log('fileUri:', fileUri);
+            await FileSystem.writeAsStringAsync(fileUri, fileContent, {
+                encoding: FileSystem.EncodingType.UTF8,
+            });
             const asset = await MediaLibrary.createAssetAsync(fileUri);
-            console.log("asset:", asset);
-            await MediaLibrary.createAlbumAsync("Noted_Exports", asset, false);
+            // console.log('asset:', asset);
+            const album = await MediaLibrary.getAlbumAsync('Exports');
+            // console.log('album:', album);
+            if (!album) {
+                await MediaLibrary.createAlbumAsync('Exports', asset);
+                // console.log('Done...');
+            } else {
+                await MediaLibrary.addAssetsToAlbumAsync(
+                    asset,
+                    'Exports',
+                    false
+                );
+                // console.log('Done...');
+            }
         } catch (error) {
             console.log(error);
         }
