@@ -2,12 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
-import DocumentPicker, {
-    DirectoryPickerResponse,
-    DocumentPickerResponse,
-    isInProgress,
-    types,
-} from 'react-native-document-picker';
+import { v4 as uuidv4 } from 'uuid';
 
 export const removeNoteFromStorage = async (user_id, local_id, storage) => {
     // console.log('local_id:', local_id);
@@ -135,7 +130,7 @@ export const exportFile = async (noteName, fileContent, fileType) => {
             });
             // console.log('folderUri:', folderUri);
             const fileUri = `${folderUri}${noteName.replace(
-                /\s+/g,
+                ' ',
                 '-'
             )}.${fileType}`;
             // console.log('fileUri:', fileUri);
@@ -163,4 +158,25 @@ export const exportFile = async (noteName, fileContent, fileType) => {
     }
 };
 
-export const importFile = () => {};
+export const importFile = async (user_id, fileName, fileUri) => {
+    const fileContent = await FileSystem.readAsStringAsync(fileUri, {
+        encoding: FileSystem.EncodingType.UTF8,
+    });
+    // console.log('fileContent:', fileContent);
+
+    const id = uuidv4();
+    const newData = {
+        local_id: id,
+        name: fileName.replace('-', ' ').split('.').slice(0, -1).join('.'), //replace '-' with ' ' && remove file extension
+        status: null,
+        tags: [],
+        content: fileContent,
+        lastUpdated: new Date(),
+        createdAt: new Date(),
+    };
+    try {
+        await saveNoteToStorage(user_id, newData, 'noted');
+    } catch (error) {
+        console.log(error);
+    }
+};
