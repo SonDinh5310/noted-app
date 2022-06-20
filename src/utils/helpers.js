@@ -3,6 +3,8 @@ import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
 import { v4 as uuidv4 } from 'uuid';
+const axios = require('axios');
+import { AuthStore, AppStore } from '../../context/zustand';
 
 export const removeNoteFromStorage = async (user_id, local_id, storage) => {
     // console.log('local_id:', local_id);
@@ -104,6 +106,20 @@ export const saveNoteToStorage = async (user_id, data, storage) => {
         );
     } catch (error) {
         console.log('error: ', error);
+    }
+};
+
+export const backupNote = async (data) => {
+    try {
+        setIsLoading(true);
+        const res = await axios.post(
+            'https://noted-app-backend.herokuapp.com/api/note/backup',
+            data
+        );
+    } catch (error) {
+        console.log('error: ', error);
+    } finally {
+        setIsLoading(false);
     }
 };
 

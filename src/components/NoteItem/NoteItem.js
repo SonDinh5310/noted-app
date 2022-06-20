@@ -7,13 +7,15 @@ import {
     removeNoteFromStorage,
     restoreNote,
     exportFile,
+    backupNote,
 } from '../../utils/helpers';
 import tw from 'twrnc';
 
 const moment = require('moment');
 
 function NoteItem({ data, navigation, type }) {
-    const { local_id, name, content, lastUpdated, status, tags } = data;
+    const { local_id, name, content, lastUpdated, createdAt, status, tags } =
+        data;
 
     const { userData } = AuthStore((state) => ({
         userData: state.userData,
@@ -60,6 +62,22 @@ function NoteItem({ data, navigation, type }) {
             console.log(error);
         }
     };
+    const handleBackupNote = async () => {
+        try {
+            await backupNote({
+                owner: userData._id,
+                local_id: local_id,
+                name: name,
+                content: content,
+                tags: tags,
+                status: status,
+                lastUpdated: lastUpdated,
+                createdAt: createdAt,
+            });
+        } catch (error) {
+            console(error);
+        }
+    };
     return (
         <TouchableOpacity
             onPress={
@@ -89,6 +107,12 @@ function NoteItem({ data, navigation, type }) {
                                 size={28}
                                 color="blue"
                             ></Icon>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={tw`mr-3`}
+                            onPress={() => handleBackupNote()}
+                        >
+                            <Icon name="backup" size={28} color="white"></Icon>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => handleDeleteNote('noted')}
