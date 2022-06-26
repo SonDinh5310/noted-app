@@ -108,15 +108,7 @@ const SideMenu = ({ navigation }) => {
                     ),
                 }}
             />
-            <Drawer.Screen
-                name="Profile"
-                component={UserProfile}
-                options={{
-                    drawerIcon: ({ color }) => (
-                        <Icon name="person" size={22} color={color}></Icon>
-                    ),
-                }}
-            />
+
             <Drawer.Screen
                 name="Recycle Bin"
                 initialParams={{ type: 'deleted_note' }}
@@ -127,15 +119,6 @@ const SideMenu = ({ navigation }) => {
                     ),
                 }}
             />
-            {/* <Drawer.Screen
-                name="Settings"
-                component={Settings}
-                options={{
-                    drawerIcon: ({ color }) => (
-                        <Icon name="settings" size={22} color={color}></Icon>
-                    ),
-                }}
-            /> */}
         </Drawer.Navigator>
     );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { ScrollView, Text, ActivityIndicator } from 'react-native';
+import { ScrollView, Text, Alert } from 'react-native';
 import { AppStore } from '../../context/zustand';
 import tw from 'twrnc';
 const axios = require('axios');
@@ -17,7 +17,6 @@ const SignUp = ({ navigation }) => {
     const { control, watch, handleSubmit, reset } = useForm({
         defaultValues: {
             name: '',
-            username: '',
             email: '',
             password: '',
         },
@@ -42,6 +41,7 @@ const SignUp = ({ navigation }) => {
             reset();
             navigation.navigate('Sign In');
         } catch (error) {
+            console.log(error);
             Alert.alert('Error!', error.response.data.error, [{ text: 'OK' }]);
         } finally {
             setIsLoading(false);
