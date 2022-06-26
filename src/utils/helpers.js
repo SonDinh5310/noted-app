@@ -4,7 +4,7 @@ import * as FileSystem from 'expo-file-system';
 import * as Permissions from 'expo-permissions';
 import { v4 as uuidv4 } from 'uuid';
 const axios = require('axios');
-import { AuthStore, AppStore } from '../../context/zustand';
+import { AuthStore, AppStore } from '../context/zustand';
 
 export const removeNoteFromStorage = async (user_id, local_id, storage) => {
     // console.log('local_id:', local_id);
@@ -93,7 +93,12 @@ export const saveNoteToStorage = async (user_id, data, storage) => {
         const userStorage = await AsyncStorage.getItem(`${storage}-${user_id}`);
         if (userStorage) {
             let temp = JSON.parse(userStorage);
-            temp.unshift(data);
+            if (!Array.isArray(data)) {
+                temp.unshift(data);
+            }
+            if (Array.isArray(data)) {
+                data.forEach((note) => temp.unshift(note));
+            }
             await AsyncStorage.setItem(
                 `${storage}-${user_id}`,
                 JSON.stringify(temp)
@@ -102,7 +107,7 @@ export const saveNoteToStorage = async (user_id, data, storage) => {
         }
         await AsyncStorage.setItem(
             `${storage}-${user_id}`,
-            JSON.stringify([data])
+            JSON.stringify(Array.isArray(data) ? data : [data])
         );
     } catch (error) {
         console.log('error: ', error);
@@ -111,15 +116,26 @@ export const saveNoteToStorage = async (user_id, data, storage) => {
 
 export const backupNote = async (data) => {
     try {
-        setIsLoading(true);
         const res = await axios.post(
             'https://noted-app-backend.herokuapp.com/api/note/backup',
             data
         );
+        console.log('res:', res);
     } catch (error) {
-        console.log('error: ', error);
-    } finally {
-        setIsLoading(false);
+        console.log(error);
+    }
+};
+
+export const updateLocal = async (data) => {
+    try {
+        const res = await axios.post(
+            'https://noted-app-backend.herokuapp.com/api/note/update_local',
+            data
+        );
+        // console.log('res:', res);
+        return res;
+    } catch (error) {
+        console.log(error);
     }
 };
 

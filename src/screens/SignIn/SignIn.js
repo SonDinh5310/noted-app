@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { ScrollView, View, TouchableOpacity, Text } from 'react-native';
+import { ScrollView, Alert, TouchableOpacity, Text } from 'react-native';
 import { AuthStore, AppStore } from '../../context/zustand';
 import tw from 'twrnc';
 
@@ -36,11 +36,17 @@ const SignIn = ({ navigation }) => {
                 'https://noted-app-backend.herokuapp.com/api/user/login',
                 data
             );
+
+            if (result.data.error) {
+                Alert.alert('Error!', result.data.error, [{ text: 'OK' }]);
+            } else {
+                Alert.alert('Success', 'Login success!', [{ text: 'OK' }]);
+            }
             setUserData(result.data);
             setUserToken(result.headers['auth-token']);
             reset();
         } catch (error) {
-            console.log('error: ', error);
+            Alert.alert('Error!', error.response.data.error, [{ text: 'OK' }]);
         } finally {
             setIsLoading(false);
         }

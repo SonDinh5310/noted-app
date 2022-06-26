@@ -1,6 +1,6 @@
 import 'react-native-get-random-values';
-import React, { useState, useRef } from 'react';
-import { Alert, ScrollView, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, ScrollView, TextInput } from 'react-native';
 import { AppStore, AuthStore } from '../../context/zustand';
 import { saveNoteToStorage, updateNoteToStorage } from '../../utils/helpers';
 import CustomFloatingButton from '../../components/CustomFloatingButton/CustomFloatingButton';
@@ -62,7 +62,7 @@ const Editor = ({ navigation, route }) => {
                     status: status,
                     tags: tags.tagsArray,
                     content: data,
-                    lastUpdated: new Date(),
+                    lastUpdated: new Date().toISOString(),
                     createdAt: noteData.createdAt,
                 });
             }
@@ -76,8 +76,8 @@ const Editor = ({ navigation, route }) => {
                         status: status,
                         tags: tags.tagsArray,
                         content: data,
-                        lastUpdated: new Date(),
-                        createdAt: new Date(),
+                        lastUpdated: new Date().toISOString(),
+                        createdAt: new Date().toISOString(),
                     },
                     'noted'
                 );

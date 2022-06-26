@@ -30,14 +30,19 @@ const SignUp = ({ navigation }) => {
         try {
             setIsLoading(true);
             delete data['confirm_password'];
-            await axios.post(
+            const result = await axios.post(
                 'https://noted-app-backend.herokuapp.com/api/user/register',
                 data
             );
+            if (result.data.error) {
+                Alert.alert('Error!', result.data.error, [{ text: 'OK' }]);
+            } else {
+                Alert.alert('Success', 'Register success!', [{ text: 'OK' }]);
+            }
             reset();
             navigation.navigate('Sign In');
         } catch (error) {
-            console.log('error: ', error);
+            Alert.alert('Error!', error.response.data.error, [{ text: 'OK' }]);
         } finally {
             setIsLoading(false);
         }

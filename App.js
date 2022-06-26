@@ -1,6 +1,6 @@
 import { AppStore, AuthStore } from './src/context/zustand';
 
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, LogBox } from 'react-native';
 import Editor from './src/screens/Editor/Editor';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
@@ -10,6 +10,8 @@ import SignUp from './src/screens/SignUp/SignUp';
 import { StatusBar } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import tw from 'twrnc';
+
+LogBox.ignoreAllLogs();
 
 const Stack = createNativeStackNavigator();
 

@@ -1,10 +1,10 @@
-import { AppStore, AuthStore } from "../../context/zustand";
-import React, { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { AppStore, AuthStore } from '../../context/zustand';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, Text, View } from 'react-native';
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import NoteItem from "../NoteItem/NoteItem";
-import tw from "twrnc";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import NoteItem from '../NoteItem/NoteItem';
+import tw from 'twrnc';
 
 function NotesList({ navigation, notes, type }) {
     // console.log('notes:', notes);
@@ -40,12 +40,12 @@ function NotesList({ navigation, notes, type }) {
                                 type={type}
                             />
                         ))}
-                    {type === "note" && (!notes || notes.length === 0) && (
+                    {type === 'note' && (!notes || notes.length === 0) && (
                         <Text style={tw`w-full text-center text-[16px]`}>
                             OOps! Nothing here.
                         </Text>
                     )}
-                    {type === "deleted_note" &&
+                    {type === 'deleted_note' &&
                         (!notes || notes.length === 0) && (
                             <Text style={tw`w-full text-center text-[16px]`}>
                                 OOps! nothing here.

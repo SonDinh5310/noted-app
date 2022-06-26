@@ -21,8 +21,9 @@ function NoteItem({ data, navigation, type }) {
         userData: state.userData,
     }));
 
-    const { setIsUpdate } = AppStore((state) => ({
+    const { setIsUpdate, setIsLoading } = AppStore((state) => ({
         setIsUpdate: state.setIsUpdate,
+        setIsLoading: state.setIsLoading,
     }));
 
     const handleDeleteNote = async (storage) => {
@@ -64,6 +65,7 @@ function NoteItem({ data, navigation, type }) {
     };
     const handleBackupNote = async () => {
         try {
+            setIsLoading(true);
             await backupNote({
                 owner: userData._id,
                 local_id: local_id,
@@ -74,8 +76,11 @@ function NoteItem({ data, navigation, type }) {
                 lastUpdated: lastUpdated,
                 createdAt: createdAt,
             });
+            console.log('Note uploaded ...');
         } catch (error) {
-            console(error);
+            console.log(error);
+        } finally {
+            setIsLoading(false);
         }
     };
     return (
@@ -105,14 +110,14 @@ function NoteItem({ data, navigation, type }) {
                             <Icon
                                 name="file-upload"
                                 size={28}
-                                color="blue"
+                                color="black"
                             ></Icon>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={tw`mr-3`}
                             onPress={() => handleBackupNote()}
                         >
-                            <Icon name="backup" size={28} color="white"></Icon>
+                            <Icon name="backup" size={28} color="black"></Icon>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => handleDeleteNote('noted')}
